@@ -1,0 +1,1372 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ProTest - Online Test System</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --primary:#6366f1;
+  --primary2:#8b5cf6;
+  --text:#1f2937;
+  --muted:#6b7280;
+  --bg:#f3f4f6;
+  --green:#16a34a;
+  --red:#dc2626;
+  --orange:#f59e0b;
+  --border:#e5e7eb;
+}
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:linear-gradient(135deg,#eef2ff,#f5f3ff,#f8fafc);
+  color:var(--text);
+  min-height:100vh;
+}
+
+button,input,textarea,select{font:inherit}
+button{cursor:pointer;border:0}
+.hidden{display:none!important}
+
+header{
+  background:linear-gradient(135deg,var(--primary),var(--primary2));
+  color:white;
+  padding:18px 5%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  box-shadow:0 5px 20px #0002;
+}
+
+.logo{
+  font-size:22px;
+  font-weight:800;
+}
+
+.header-btn{
+  background:#ffffff22;
+  color:white;
+  padding:9px 15px;
+  border-radius:10px;
+  border:1px solid #ffffff55;
+}
+
+.container{
+  max-width:1100px;
+  margin:35px auto;
+  padding:0 18px;
+}
+
+.card{
+  background:white;
+  border-radius:20px;
+  padding:28px;
+  box-shadow:0 12px 40px #00000010;
+  animation:fadeUp .45s ease;
+}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(15px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+.hero{
+  text-align:center;
+  padding:55px 25px;
+}
+
+.hero h1{
+  font-size:42px;
+  margin-bottom:12px;
+}
+
+.hero p{
+  color:var(--muted);
+  font-size:17px;
+  margin-bottom:28px;
+}
+
+.btn{
+  padding:12px 19px;
+  border-radius:11px;
+  font-weight:700;
+  transition:.2s;
+}
+
+.btn:hover{
+  transform:translateY(-2px);
+}
+
+.btn-primary{
+  color:white;
+  background:linear-gradient(135deg,var(--primary),var(--primary2));
+}
+
+.btn-secondary{
+  background:#eef2ff;
+  color:#4338ca;
+}
+
+.btn-danger{
+  background:#fee2e2;
+  color:#b91c1c;
+}
+
+.btn-success{
+  background:#dcfce7;
+  color:#15803d;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:18px;
+}
+
+.grid4{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+}
+
+.section-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+}
+
+.form-group{
+  margin-bottom:17px;
+}
+
+label{
+  font-weight:700;
+  font-size:14px;
+}
+
+input,textarea,select{
+  width:100%;
+  padding:12px 14px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  outline:none;
+  margin-top:7px;
+  background:white;
+}
+
+input:focus,textarea:focus,select:focus{
+  border-color:var(--primary);
+  box-shadow:0 0 0 3px #6366f122;
+}
+
+.admin-tabs{
+  display:flex;
+  gap:8px;
+  margin-bottom:20px;
+  flex-wrap:wrap;
+}
+
+.tab{
+  padding:10px 15px;
+  border-radius:9px;
+  background:#f3f4f6;
+}
+
+.tab.active{
+  background:#6366f1;
+  color:white;
+}
+
+.question-editor{
+  border:1px solid var(--border);
+  padding:20px;
+  border-radius:15px;
+  margin-bottom:15px;
+}
+
+.option-row{
+  display:grid;
+  grid-template-columns:1fr 130px;
+  gap:10px;
+  margin-bottom:10px;
+}
+
+.question-list{
+  display:grid;
+  gap:12px;
+}
+
+.question-item{
+  border:1px solid var(--border);
+  padding:15px;
+  border-radius:13px;
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+  align-items:center;
+}
+
+.question-item small{
+  color:var(--muted);
+}
+
+.test-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:15px;
+}
+
+.timer{
+  background:#111827;
+  color:white;
+  padding:10px 16px;
+  border-radius:12px;
+  font-weight:800;
+  min-width:85px;
+  text-align:center;
+}
+
+.timer.warning{
+  background:#dc2626;
+  animation:pulse 1s infinite;
+}
+
+@keyframes pulse{
+  50%{transform:scale(1.05)}
+}
+
+.progress{
+  height:8px;
+  background:#e5e7eb;
+  border-radius:20px;
+  overflow:hidden;
+  margin:15px 0 25px;
+}
+
+.progress-bar{
+  height:100%;
+  background:linear-gradient(90deg,#6366f1,#8b5cf6);
+  transition:.35s;
+}
+
+.test-question{
+  font-size:23px;
+  line-height:1.5;
+  margin-bottom:22px;
+}
+
+.options{
+  display:grid;
+  gap:12px;
+}
+
+.option{
+  padding:16px;
+  border:2px solid #e5e7eb;
+  border-radius:13px;
+  background:white;
+  text-align:left;
+  transition:.2s;
+}
+
+.option:hover{
+  border-color:#818cf8;
+  transform:translateX(3px);
+}
+
+.option.selected{
+  border-color:#6366f1;
+  background:#eef2ff;
+}
+
+.option-letter{
+  display:inline-flex;
+  width:31px;
+  height:31px;
+  border-radius:50%;
+  background:#f3f4f6;
+  justify-content:center;
+  align-items:center;
+  margin-right:10px;
+  font-weight:800;
+}
+
+.test-actions{
+  display:flex;
+  justify-content:space-between;
+  margin-top:25px;
+}
+
+.result-hero{
+  text-align:center;
+}
+
+.score-circle{
+  width:150px;
+  height:150px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#6366f1,#8b5cf6);
+  color:white;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  margin:20px auto;
+  box-shadow:0 15px 35px #6366f155;
+}
+
+.score-circle strong{
+  font-size:38px;
+}
+
+.result-stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+  margin:25px 0;
+}
+
+.result-box{
+  padding:18px;
+  border-radius:13px;
+  background:#f9fafb;
+}
+
+.result-box strong{
+  font-size:25px;
+  display:block;
+}
+
+.review{
+  margin-top:25px;
+  text-align:left;
+}
+
+.review-item{
+  border-radius:14px;
+  padding:18px;
+  margin-bottom:12px;
+  border-left:5px solid;
+}
+
+.review-correct{
+  background:#f0fdf4;
+  border-color:#16a34a;
+}
+
+.review-wrong{
+  background:#fef2f2;
+  border-color:#dc2626;
+}
+
+.review-unanswered{
+  background:#fffbeb;
+  border-color:#f59e0b;
+}
+
+.review-item p{
+  margin:7px 0;
+}
+
+.badge{
+  display:inline-block;
+  padding:5px 9px;
+  border-radius:20px;
+  font-size:12px;
+  font-weight:800;
+}
+
+.badge-green{
+  background:#dcfce7;
+  color:#15803d;
+}
+
+.badge-red{
+  background:#fee2e2;
+  color:#b91c1c;
+}
+
+.badge-orange{
+  background:#fef3c7;
+  color:#b45309;
+}
+
+.table-wrap{
+  overflow:auto;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+th,td{
+  padding:13px;
+  border-bottom:1px solid var(--border);
+  text-align:left;
+  white-space:nowrap;
+}
+
+th{
+  background:#f9fafb;
+}
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:#0008;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  z-index:50;
+}
+
+.modal-box{
+  background:white;
+  width:min(650px,100%);
+  max-height:90vh;
+  overflow:auto;
+  border-radius:18px;
+  padding:25px;
+}
+
+.empty{
+  text-align:center;
+  color:var(--muted);
+  padding:35px;
+}
+
+@media(max-width:700px){
+  .hero h1{font-size:30px}
+  .grid,.result-stats{grid-template-columns:1fr}
+  .grid4{grid-template-columns:1fr 1fr}
+  .question-item{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+  .test-question{font-size:19px}
+  .card{padding:20px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">⚡ ProTest</div>
+  <button class="header-btn" onclick="openAdminLogin()">👑 Admin</button>
+</header>
+
+<div class="container">
+
+<!-- HOME -->
+<section id="home" class="card hero">
+
+  <h1>Online Test</h1>
+
+  <p>
+    Apna naam enter karke test shuru karein.
+  </p>
+
+  <div style="max-width:420px;margin:auto;text-align:left">
+
+    <div class="form-group">
+      <label>Student Name</label>
+      <input
+        id="studentName"
+        placeholder="Apna poora naam likhein"
+      >
+    </div>
+
+    <button
+      class="btn btn-primary"
+      style="width:100%"
+      onclick="startTest()"
+    >
+      🚀 Start Test
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- TEST -->
+<section id="testSection" class="card hidden">
+
+  <div class="test-top">
+
+    <div>
+      <strong id="studentDisplay"></strong>
+
+      <div
+        id="questionCounter"
+        style="color:#6b7280;margin-top:5px"
+      ></div>
+    </div>
+
+    <div id="timer" class="timer">
+      00:00
+    </div>
+
+  </div>
+
+  <div class="progress">
+    <div
+      id="progressBar"
+      class="progress-bar"
+    ></div>
+  </div>
+
+  <div id="questionArea"></div>
+
+  <div class="test-actions">
+
+    <button
+      id="prevBtn"
+      class="btn btn-secondary"
+      onclick="previousQuestion()"
+    >
+      ← Previous
+    </button>
+
+    <button
+      id="nextBtn"
+      class="btn btn-primary"
+      onclick="nextQuestion()"
+    >
+      Next →
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- RESULT -->
+<section id="resultSection" class="card hidden">
+
+  <div class="result-hero">
+
+    <h1>🎉 Test Completed!</h1>
+
+    <p
+      id="resultStudent"
+      style="color:#6b7280"
+    ></p>
+
+    <div class="score-circle">
+
+      <strong id="scorePercentage">
+        0%
+      </strong>
+
+      <span>Score</span>
+
+    </div>
+
+    <div class="result-stats">
+
+      <div class="result-box">
+        <strong id="totalResult">0</strong>
+        Total
+      </div>
+
+      <div class="result-box">
+        <strong id="correctResult">0</strong>
+        Correct
+      </div>
+
+      <div class="result-box">
+        <strong id="wrongResult">0</strong>
+        Wrong
+      </div>
+
+    </div>
+
+    <div id="studentReview" class="review"></div>
+
+    <button
+      class="btn btn-primary"
+      onclick="location.reload()"
+    >
+      🏠 Back to Home
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- ADMIN -->
+<section id="adminSection" class="hidden">
+
+  <div class="section-title">
+
+    <h2>👑 Admin Dashboard</h2>
+
+    <button
+      class="btn btn-danger"
+      onclick="closeAdmin()"
+    >
+      Logout
+    </button>
+
+  </div>
+
+
+  <div class="admin-tabs">
+
+    <button
+      class="tab active"
+      onclick="showAdminTab('questions',this)"
+    >
+      📝 Questions
+    </button>
+
+    <button
+      class="tab"
+      onclick="showAdminTab('results',this)"
+    >
+      📊 Results
+    </button>
+
+  </div>
+
+
+  <!-- QUESTIONS -->
+
+  <div id="adminQuestions" class="card">
+
+    <div class="section-title">
+
+      <h2>Question Manager</h2>
+
+      <button
+        class="btn btn-primary"
+        onclick="newQuestion()"
+      >
+        ＋ New Question
+      </button>
+
+    </div>
+
+
+    <div id="questionEditor" class="hidden">
+
+      <div class="question-editor">
+
+        <h3 id="editorTitle">
+          New Question
+        </h3>
+
+        <div class="form-group">
+
+          <label>Question</label>
+
+          <textarea
+            id="qText"
+            rows="3"
+            placeholder="Question likhein..."
+          ></textarea>
+
+        </div>
+
+
+        <div class="grid4">
+
+          <div class="form-group">
+            <label>Option A</label>
+            <input id="optA">
+          </div>
+
+          <div class="form-group">
+            <label>Option B</label>
+            <input id="optB">
+          </div>
+
+          <div class="form-group">
+            <label>Option C</label>
+            <input id="optC">
+          </div>
+
+          <div class="form-group">
+            <label>Option D</label>
+            <input id="optD">
+          </div>
+
+        </div>
+
+
+        <div class="grid">
+
+          <div class="form-group">
+
+            <label>
+              Correct Answer
+            </label>
+
+            <select id="correctAnswer">
+
+              <option value="A">
+                Option A
+              </option>
+
+              <option value="B">
+                Option B
+              </option>
+
+              <option value="C">
+                Option C
+              </option>
+
+              <option value="D">
+                Option D
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label>
+              Question Timer
+            </label>
+
+            <div style="display:flex;gap:8px">
+
+              <input
+                id="timerValue"
+                type="number"
+                min="1"
+                value="30"
+              >
+
+              <select id="timerUnit">
+
+                <option value="seconds">
+                  Seconds
+                </option>
+
+                <option value="minutes">
+                  Minutes
+                </option>
+
+              </select>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div style="display:flex;gap:10px">
+
+          <button
+            class="btn btn-success"
+            onclick="saveQuestion()"
+          >
+            💾 Save Question
+          </button>
+
+          <button
+            class="btn btn-secondary"
+            onclick="cancelEditor()"
+          >
+            Cancel
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div
+      id="questionList"
+      class="question-list"
+    ></div>
+
+  </div>
+
+
+  <!-- RESULTS -->
+
+  <div
+    id="adminResults"
+    class="card hidden"
+  >
+
+    <div class="section-title">
+
+      <h2>📊 Student Results</h2>
+
+      <button
+        class="btn btn-danger"
+        onclick="clearResults()"
+      >
+        Clear All Results
+      </button>
+
+    </div>
+
+    <div id="resultsList"></div>
+
+  </div>
+
+</section>
+
+</div>
+
+
+<!-- ADMIN LOGIN -->
+
+<div
+  id="loginModal"
+  class="modal hidden"
+>
+
+  <div class="modal-box">
+
+    <h2>👑 Admin Login</h2>
+
+    <p
+      style="color:#6b7280;margin:8px 0 20px"
+    >
+      Admin dashboard access ke liye PIN enter karein.
+    </p>
+
+
+    <div class="form-group">
+
+      <label>Admin PIN</label>
+
+      <input
+        id="adminPin"
+        type="password"
+        placeholder="Enter PIN"
+      >
+
+    </div>
+
+
+    <div style="display:flex;gap:10px">
+
+      <button
+        class="btn btn-primary"
+        onclick="adminLogin()"
+      >
+        Login
+      </button>
+
+      <button
+        class="btn btn-secondary"
+        onclick="closeAdminLogin()"
+      >
+        Cancel
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- DETAIL MODAL -->
+
+<div
+  id="detailModal"
+  class="modal hidden"
+>
+
+  <div class="modal-box">
+
+    <div class="section-title">
+
+      <h2 id="detailTitle">
+        Student Result
+      </h2>
+
+      <button
+        class="btn btn-secondary"
+        onclick="closeDetail()"
+      >
+        ✕
+      </button>
+
+    </div>
+
+    <div id="detailContent"></div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   ADMIN PIN
+   ========================================================= */
+
+const ADMIN_PIN = "15052004";
+
+
+/* =========================================================
+   QUESTIONS
+   ========================================================= */
+
+const DEFAULT_QUESTIONS = [
+  {
+    id: crypto.randomUUID(),
+
+    text:"भारत की राजधानी क्या है?",
+
+    options:{
+      A:"मुंबई",
+      B:"नई दिल्ली",
+      C:"पटना",
+      D:"जयपुर"
+    },
+
+    correct:"B",
+
+    time:30
+  },
+
+  {
+    id:crypto.randomUUID(),
+
+    text:"5 × 6 कितना होता है?",
+
+    options:{
+      A:"20",
+      B:"25",
+      C:"30",
+      D:"35"
+    },
+
+    correct:"C",
+
+    time:20
+  }
+];
+
+
+let questions =
+  JSON.parse(
+    localStorage.getItem("protest_questions")
+  );
+
+
+if(!questions){
+
+  questions = DEFAULT_QUESTIONS;
+
+  saveQuestions();
+
+}
+
+
+let results =
+  JSON.parse(
+    localStorage.getItem("protest_results")
+  ) || [];
+
+
+let currentStudent = "";
+
+let currentQuestion = 0;
+
+let answers = [];
+
+let timerInterval = null;
+
+let timeLeft = 0;
+
+let editingId = null;
+
+
+/* =========================================================
+   STORAGE
+   ========================================================= */
+
+function saveQuestions(){
+
+  localStorage.setItem(
+    "protest_questions",
+    JSON.stringify(questions)
+  );
+
+}
+
+
+function saveResults(){
+
+  localStorage.setItem(
+    "protest_results",
+    JSON.stringify(results)
+  );
+
+}
+
+
+/* =========================================================
+   START TEST
+   ========================================================= */
+
+function startTest(){
+
+  const name =
+    document
+      .getElementById("studentName")
+      .value
+      .trim();
+
+
+  if(!name){
+
+    alert(
+      "Please pehle apna naam enter karein."
+    );
+
+    return;
+
+  }
+
+
+  if(questions.length === 0){
+
+    alert(
+      "Abhi koi question available nahi hai."
+    );
+
+    return;
+
+  }
+
+
+  currentStudent = name;
+
+  currentQuestion = 0;
+
+  answers =
+    new Array(questions.length)
+      .fill(null);
+
+
+  document
+    .getElementById("home")
+    .classList
+    .add("hidden");
+
+
+  document
+    .getElementById("resultSection")
+    .classList
+    .add("hidden");
+
+
+  document
+    .getElementById("testSection")
+    .classList
+    .remove("hidden");
+
+
+  document
+    .getElementById("studentDisplay")
+    .textContent =
+      "👤 " + currentStudent;
+
+
+  showQuestion();
+
+}
+
+
+/* =========================================================
+   SHOW QUESTION
+   ========================================================= */
+
+function showQuestion(){
+
+  clearInterval(timerInterval);
+
+
+  const q =
+    questions[currentQuestion];
+
+
+  document
+    .getElementById("questionCounter")
+    .textContent =
+      `Question ${currentQuestion + 1} / ${questions.length}`;
+
+
+  document
+    .getElementById("progressBar")
+    .style
+    .width =
+      `${((currentQuestion + 1) / questions.length) * 100}%`;
+
+
+  let html = `
+
+    <div class="test-question">
+      ${escapeHTML(q.text)}
+    </div>
+
+    <div class="options">
+
+  `;
+
+
+  ["A","B","C","D"].forEach(letter=>{
+
+    const selected =
+      answers[currentQuestion] === letter
+        ? "selected"
+        : "";
+
+
+    html += `
+
+      <button
+        class="option ${selected}"
+        onclick="selectAnswer('${letter}')"
+      >
+
+        <span class="option-letter">
+          ${letter}
+        </span>
+
+        ${escapeHTML(q.options[letter])}
+
+      </button>
+
+    `;
+
+  });
+
+
+  html += `</div>`;
+
+
+  document
+    .getElementById("questionArea")
+    .innerHTML = html;
+
+
+  document
+    .getElementById("prevBtn")
+    .disabled =
+      currentQuestion === 0;
+
+
+  document
+    .getElementById("nextBtn")
+    .textContent =
+      currentQuestion === questions.length - 1
+        ? "Submit Test ✓"
+        : "Next →";
+
+
+  startTimer(q.time);
+
+}
+
+
+/* =========================================================
+   SELECT ANSWER
+   ========================================================= */
+
+function selectAnswer(letter){
+
+  answers[currentQuestion] =
+    letter;
+
+
+  showQuestionWithoutResettingTimer();
+
+}
+
+
+function showQuestionWithoutResettingTimer(){
+
+  const q =
+    questions[currentQuestion];
+
+
+  let html = `
+
+    <div class="test-question">
+      ${escapeHTML(q.text)}
+    </div>
+
+    <div class="options">
+
+  `;
+
+
+  ["A","B","C","D"].forEach(letter=>{
+
+    const selected =
+      answers[currentQuestion] === letter
+        ? "selected"
+        : "";
+
+
+    html += `
+
+      <button
+        class="option ${selected}"
+        onclick="selectAnswer('${letter}')"
+      >
+
+        <span class="option-letter">
+          ${letter}
+        </span>
+
+        ${escapeHTML(q.options[letter])}
+
+      </button>
+
+    `;
+
+  });
+
+
+  html += `</div>`;
+
+
+  document
+    .getElementById("questionArea")
+    .innerHTML = html;
+
+}
+
+
+/* =========================================================
+   TIMER
+   ========================================================= */
+
+function startTimer(seconds){
+
+  timeLeft = seconds;
+
+  updateTimer();
+
+
+  timerInterval =
+    setInterval(()=>{
+
+      timeLeft--;
+
+      updateTimer();
+
+
+      if(timeLeft <= 0){
+
+        clearInterval(timerInterval);
+
+        autoNext();
+
+      }
+
+    },1000);
+
+}
+
+
+function updateTimer(){
+
+  const timer =
+    document.getElementById("timer");
+
+
+  const min =
+    Math.floor(timeLeft / 60);
+
+
+  const sec =
+    timeLeft % 60;
+
+
+  timer.textContent =
+    `${String(min).padStart(2,"0")}:${String(sec).padStart(2,"0")}`;
+
+
+  timer.classList.toggle(
+    "warning",
+    timeLeft <= 10
+  );
+
+}
+
+
+/* =========================================================
+   NEXT / PREVIOUS
+   ========================================================= */
+
+function autoNext(){
+
+  if(
+    currentQuestion ===
+    questions.length - 1
+  ){
+
+    submitTest();
+
+  }else{
+
+    currentQuestion++;
+
+    showQuestion();
+
+  }
+
+}
+
+
+function nextQuestion(){
+
+  if(
+    currentQuestion ===
+    questions.length - 1
+  ){
+
+    if(
+      confirm(
+        "Kya aap test submit karna chahte hain?"
+      )
+    ){
+
+      submitTest();
+
+    }
+
+  }else{
+
+    currentQuestion++;
+
+    showQuestion();
+
+  }
+
+}
+
+
+function previousQuestion(){
+
+  if(curre
