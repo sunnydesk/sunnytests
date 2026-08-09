@@ -3,1800 +3,263 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ProTest - Online Test System</title>
-
+<title>SunnyTests - Online Test</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-
-:root{
-  --primary:#6366f1;
-  --primary2:#8b5cf6;
-  --text:#1f2937;
-  --muted:#6b7280;
-  --bg:#f3f4f6;
-  --green:#16a34a;
-  --red:#dc2626;
-  --orange:#f59e0b;
-  --border:#e5e7eb;
-}
-
-body{
-  font-family:Arial,Helvetica,sans-serif;
-  background:linear-gradient(135deg,#eef2ff,#f5f3ff,#f8fafc);
-  color:var(--text);
-  min-height:100vh;
-}
-
-button,input,textarea,select{font:inherit}
-button{cursor:pointer;border:0}
-.hidden{display:none!important}
-
-header{
-  background:linear-gradient(135deg,var(--primary),var(--primary2));
-  color:white;
-  padding:18px 5%;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  box-shadow:0 5px 20px #0002;
-}
-
-.logo{
-  font-size:22px;
-  font-weight:800;
-}
-
-.header-btn{
-  background:#ffffff22;
-  color:white;
-  padding:9px 15px;
-  border-radius:10px;
-  border:1px solid #ffffff55;
-}
-
-.container{
-  max-width:1100px;
-  margin:35px auto;
-  padding:0 18px;
-}
-
-.card{
-  background:white;
-  border-radius:20px;
-  padding:28px;
-  box-shadow:0 12px 40px #00000010;
-  animation:fadeUp .45s ease;
-}
-
-@keyframes fadeUp{
-  from{opacity:0;transform:translateY(15px)}
-  to{opacity:1;transform:translateY(0)}
-}
-
-.hero{
-  text-align:center;
-  padding:55px 25px;
-}
-
-.hero h1{
-  font-size:42px;
-  margin-bottom:12px;
-}
-
-.hero p{
-  color:var(--muted);
-  font-size:17px;
-  margin-bottom:28px;
-}
-
-.btn{
-  padding:12px 19px;
-  border-radius:11px;
-  font-weight:700;
-  transition:.2s;
-}
-
-.btn:hover{
-  transform:translateY(-2px);
-}
-
-.btn-primary{
-  color:white;
-  background:linear-gradient(135deg,var(--primary),var(--primary2));
-}
-
-.btn-secondary{
-  background:#eef2ff;
-  color:#4338ca;
-}
-
-.btn-danger{
-  background:#fee2e2;
-  color:#b91c1c;
-}
-
-.btn-success{
-  background:#dcfce7;
-  color:#15803d;
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:18px;
-}
-
-.grid4{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:12px;
-}
-
-.section-title{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:20px;
-}
-
-.form-group{
-  margin-bottom:17px;
-}
-
-label{
-  font-weight:700;
-  font-size:14px;
-}
-
-input,textarea,select{
-  width:100%;
-  padding:12px 14px;
-  border:1px solid var(--border);
-  border-radius:10px;
-  outline:none;
-  margin-top:7px;
-  background:white;
-}
-
-input:focus,textarea:focus,select:focus{
-  border-color:var(--primary);
-  box-shadow:0 0 0 3px #6366f122;
-}
-
-.admin-tabs{
-  display:flex;
-  gap:8px;
-  margin-bottom:20px;
-  flex-wrap:wrap;
-}
-
-.tab{
-  padding:10px 15px;
-  border-radius:9px;
-  background:#f3f4f6;
-}
-
-.tab.active{
-  background:#6366f1;
-  color:white;
-}
-
-.question-editor{
-  border:1px solid var(--border);
-  padding:20px;
-  border-radius:15px;
-  margin-bottom:15px;
-}
-
-.option-row{
-  display:grid;
-  grid-template-columns:1fr 130px;
-  gap:10px;
-  margin-bottom:10px;
-}
-
-.question-list{
-  display:grid;
-  gap:12px;
-}
-
-.question-item{
-  border:1px solid var(--border);
-  padding:15px;
-  border-radius:13px;
-  display:flex;
-  justify-content:space-between;
-  gap:15px;
-  align-items:center;
-}
-
-.question-item small{
-  color:var(--muted);
-}
-
-.test-top{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:15px;
-}
-
-.timer{
-  background:#111827;
-  color:white;
-  padding:10px 16px;
-  border-radius:12px;
-  font-weight:800;
-  min-width:85px;
-  text-align:center;
-}
-
-.timer.warning{
-  background:#dc2626;
-  animation:pulse 1s infinite;
-}
-
-@keyframes pulse{
-  50%{transform:scale(1.05)}
-}
-
-.progress{
-  height:8px;
-  background:#e5e7eb;
-  border-radius:20px;
-  overflow:hidden;
-  margin:15px 0 25px;
-}
-
-.progress-bar{
-  height:100%;
-  background:linear-gradient(90deg,#6366f1,#8b5cf6);
-  transition:.35s;
-}
-
-.test-question{
-  font-size:23px;
-  line-height:1.5;
-  margin-bottom:22px;
-}
-
-.options{
-  display:grid;
-  gap:12px;
-}
-
-.option{
-  padding:16px;
-  border:2px solid #e5e7eb;
-  border-radius:13px;
-  background:white;
-  text-align:left;
-  transition:.2s;
-}
-
-.option:hover{
-  border-color:#818cf8;
-  transform:translateX(3px);
-}
-
-.option.selected{
-  border-color:#6366f1;
-  background:#eef2ff;
-}
-
-.option-letter{
-  display:inline-flex;
-  width:31px;
-  height:31px;
-  border-radius:50%;
-  background:#f3f4f6;
-  justify-content:center;
-  align-items:center;
-  margin-right:10px;
-  font-weight:800;
-}
-
-.test-actions{
-  display:flex;
-  justify-content:space-between;
-  margin-top:25px;
-}
-
-.result-hero{
-  text-align:center;
-}
-
-.score-circle{
-  width:150px;
-  height:150px;
-  border-radius:50%;
-  background:linear-gradient(135deg,#6366f1,#8b5cf6);
-  color:white;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  margin:20px auto;
-  box-shadow:0 15px 35px #6366f155;
-}
-
-.score-circle strong{
-  font-size:38px;
-}
-
-.result-stats{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:15px;
-  margin:25px 0;
-}
-
-.result-box{
-  padding:18px;
-  border-radius:13px;
-  background:#f9fafb;
-}
-
-.result-box strong{
-  font-size:25px;
-  display:block;
-}
-
-.review{
-  margin-top:25px;
-  text-align:left;
-}
-
-.review-item{
-  border-radius:14px;
-  padding:18px;
-  margin-bottom:12px;
-  border-left:5px solid;
-}
-
-.review-correct{
-  background:#f0fdf4;
-  border-color:#16a34a;
-}
-
-.review-wrong{
-  background:#fef2f2;
-  border-color:#dc2626;
-}
-
-.review-unanswered{
-  background:#fffbeb;
-  border-color:#f59e0b;
-}
-
-.review-item p{
-  margin:7px 0;
-}
-
-.badge{
-  display:inline-block;
-  padding:5px 9px;
-  border-radius:20px;
-  font-size:12px;
-  font-weight:800;
-}
-
-.badge-green{
-  background:#dcfce7;
-  color:#15803d;
-}
-
-.badge-red{
-  background:#fee2e2;
-  color:#b91c1c;
-}
-
-.badge-orange{
-  background:#fef3c7;
-  color:#b45309;
-}
-
-.table-wrap{
-  overflow:auto;
-}
-
-table{
-  width:100%;
-  border-collapse:collapse;
-}
-
-th,td{
-  padding:13px;
-  border-bottom:1px solid var(--border);
-  text-align:left;
-  white-space:nowrap;
-}
-
-th{
-  background:#f9fafb;
-}
-
-.modal{
-  position:fixed;
-  inset:0;
-  background:#0008;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-  z-index:50;
-}
-
-.modal-box{
-  background:white;
-  width:min(650px,100%);
-  max-height:90vh;
-  overflow:auto;
-  border-radius:18px;
-  padding:25px;
-}
-
-.empty{
-  text-align:center;
-  color:var(--muted);
-  padding:35px;
-}
-
-@media(max-width:700px){
-  .hero h1{font-size:30px}
-  .grid,.result-stats{grid-template-columns:1fr}
-  .grid4{grid-template-columns:1fr 1fr}
-  .question-item{
-    flex-direction:column;
-    align-items:flex-start;
-  }
-  .test-question{font-size:19px}
-  .card{padding:20px}
-}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(135deg,#eef2ff,#f5f3ff);color:#172033}
+header{background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;padding:16px 5%;display:flex;justify-content:space-between;align-items:center;box-shadow:0 5px 20px #0002}
+.logo{font-size:22px;font-weight:800}.container{max-width:1100px;margin:30px auto;padding:0 16px}.card{background:#fff;border-radius:20px;padding:25px;box-shadow:0 10px 35px #00000012;margin-bottom:20px}
+.hero{text-align:center;padding:55px 25px}.hero h1{font-size:40px;margin:0 0 10px}.muted{color:#667085}
+button{border:0;cursor:pointer}.btn{padding:11px 16px;border-radius:10px;font-weight:700}.primary{background:#4f46e5;color:#fff}.secondary{background:#eef2ff;color:#4338ca}.danger{background:#fee2e2;color:#b91c1c}.success{background:#dcfce7;color:#15803d}
+input,textarea,select{width:100%;padding:12px;border:1px solid #dbe0ea;border-radius:10px;margin-top:6px;outline:0}input:focus,textarea:focus,select:focus{border-color:#6366f1}.field{margin-bottom:15px}label{font-weight:700;font-size:14px}
+.hidden{display:none!important}.top{display:flex;justify-content:space-between;gap:15px;align-items:center}.timer{background:#111827;color:#fff;padding:10px 16px;border-radius:10px;font-weight:800}.warning{background:#dc2626}
+.progress{height:8px;background:#e5e7eb;border-radius:10px;margin:15px 0 25px;overflow:hidden}.bar{height:100%;background:#6366f1;transition:.3s}
+.question{font-size:23px;line-height:1.5;margin-bottom:20px}.options{display:grid;gap:12px}.option{text-align:left;padding:15px;border:2px solid #e5e7eb;background:#fff;border-radius:12px}.option.selected{border-color:#6366f1;background:#eef2ff}.actions{display:flex;justify-content:space-between;margin-top:25px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}.tab{padding:10px 14px;border-radius:9px;background:#f1f3f7}.tab.active{background:#4f46e5;color:#fff}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.qitem{border:1px solid #e4e7ec;border-radius:13px;padding:15px;display:flex;justify-content:space-between;gap:15px;align-items:center;margin:10px 0}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.stat{background:#f8fafc;padding:18px;border-radius:12px}.stat b{font-size:26px;display:block}.review{padding:15px;border-radius:12px;margin:10px 0;border-left:5px solid}.correct{background:#f0fdf4;border-color:#16a34a}.wrong{background:#fef2f2;border-color:#dc2626}.unanswered{background:#fffbeb;border-color:#f59e0b}
+.modal{position:fixed;inset:0;background:#0008;display:flex;align-items:center;justify-content:center;padding:18px;z-index:10}.modalbox{background:#fff;border-radius:18px;padding:25px;width:min(500px,100%)}
+table{width:100%;border-collapse:collapse}th,td{padding:12px;border-bottom:1px solid #e5e7eb;text-align:left;white-space:nowrap}.table{overflow:auto}
+@media(max-width:700px){.grid,.grid4,.stats{grid-template-columns:1fr}.hero h1{font-size:30px}.qitem{flex-direction:column;align-items:flex-start}.question{font-size:19px}}
 </style>
 </head>
-
 <body>
-
 <header>
-  <div class="logo">⚡ ProTest</div>
-  <button class="header-btn" onclick="openAdminLogin()">👑 Admin</button>
+  <div class="logo">⚡ SunnyTests</div>
+  <button class="btn" style="background:#ffffff22;color:#fff" onclick="openLogin()">👑 Admin</button>
 </header>
 
 <div class="container">
-
-<!-- HOME -->
 <section id="home" class="card hero">
-
   <h1>Online Test</h1>
-
-  <p>
-    Apna naam enter karke test shuru karein.
-  </p>
-
-  <div style="max-width:420px;margin:auto;text-align:left">
-
-    <div class="form-group">
-      <label>Student Name</label>
-      <input
-        id="studentName"
-        placeholder="Apna poora naam likhein"
-      >
-    </div>
-
-    <button
-      class="btn btn-primary"
-      style="width:100%"
-      onclick="startTest()"
-    >
-      🚀 Start Test
-    </button>
-
+  <p class="muted">Apna naam enter karke test shuru karein.</p>
+  <div style="max-width:430px;margin:auto;text-align:left">
+    <div class="field"><label>Student Name</label><input id="studentName" placeholder="Apna poora naam likhein"></div>
+    <button class="btn primary" style="width:100%" onclick="startTest()">🚀 Start Test</button>
   </div>
-
 </section>
 
-
-<!-- TEST -->
-<section id="testSection" class="card hidden">
-
-  <div class="test-top">
-
-    <div>
-      <strong id="studentDisplay"></strong>
-
-      <div
-        id="questionCounter"
-        style="color:#6b7280;margin-top:5px"
-      ></div>
-    </div>
-
-    <div id="timer" class="timer">
-      00:00
-    </div>
-
+<section id="test" class="card hidden">
+  <div class="top">
+    <div><b id="studentLabel"></b><div class="muted" id="counter"></div></div>
+    <div id="timer" class="timer">00:00</div>
   </div>
-
-  <div class="progress">
-    <div
-      id="progressBar"
-      class="progress-bar"
-    ></div>
-  </div>
-
+  <div class="progress"><div id="bar" class="bar"></div></div>
   <div id="questionArea"></div>
-
-  <div class="test-actions">
-
-    <button
-      id="prevBtn"
-      class="btn btn-secondary"
-      onclick="previousQuestion()"
-    >
-      ← Previous
-    </button>
-
-    <button
-      id="nextBtn"
-      class="btn btn-primary"
-      onclick="nextQuestion()"
-    >
-      Next →
-    </button>
-
+  <div class="actions">
+    <button id="prev" class="btn secondary" onclick="prevQ()">← Previous</button>
+    <button id="next" class="btn primary" onclick="nextQ()">Next →</button>
   </div>
-
 </section>
 
-
-<!-- RESULT -->
-<section id="resultSection" class="card hidden">
-
-  <div class="result-hero">
-
-    <h1>🎉 Test Completed!</h1>
-
-    <p
-      id="resultStudent"
-      style="color:#6b7280"
-    ></p>
-
-    <div class="score-circle">
-
-      <strong id="scorePercentage">
-        0%
-      </strong>
-
-      <span>Score</span>
-
+<section id="result" class="card hidden">
+  <div style="text-align:center">
+    <h1>🎉 Test Completed!</h1><p id="resultStudent" class="muted"></p>
+    <div class="stats">
+      <div class="stat"><b id="score">0%</b>Score</div>
+      <div class="stat"><b id="correct">0</b>Correct</div>
+      <div class="stat"><b id="wrong">0</b>Wrong</div>
     </div>
-
-    <div class="result-stats">
-
-      <div class="result-box">
-        <strong id="totalResult">0</strong>
-        Total
-      </div>
-
-      <div class="result-box">
-        <strong id="correctResult">0</strong>
-        Correct
-      </div>
-
-      <div class="result-box">
-        <strong id="wrongResult">0</strong>
-        Wrong
-      </div>
-
-    </div>
-
-    <div id="studentReview" class="review"></div>
-
-    <button
-      class="btn btn-primary"
-      onclick="location.reload()"
-    >
-      🏠 Back to Home
-    </button>
-
   </div>
-
+  <div id="studentReview" style="margin-top:25px"></div>
+  <button class="btn primary" onclick="location.reload()">🏠 Home</button>
 </section>
 
-
-<!-- ADMIN -->
-<section id="adminSection" class="hidden">
-
-  <div class="section-title">
-
-    <h2>👑 Admin Dashboard</h2>
-
-    <button
-      class="btn btn-danger"
-      onclick="closeAdmin()"
-    >
-      Logout
-    </button>
-
+<section id="admin" class="hidden">
+  <div class="top" style="margin-bottom:15px"><h2>👑 Admin Dashboard</h2><button class="btn danger" onclick="logoutAdmin()">Logout</button></div>
+  <div class="tabs">
+    <button id="qtab" class="tab active" onclick="adminTab('questions')">📝 Questions</button>
+    <button id="rtab" class="tab" onclick="adminTab('results')">📊 Results</button>
   </div>
 
-
-  <div class="admin-tabs">
-
-    <button
-      class="tab active"
-      onclick="showAdminTab('questions',this)"
-    >
-      📝 Questions
-    </button>
-
-    <button
-      class="tab"
-      onclick="showAdminTab('results',this)"
-    >
-      📊 Results
-    </button>
-
-  </div>
-
-
-  <!-- QUESTIONS -->
-
-  <div id="adminQuestions" class="card">
-
-    <div class="section-title">
-
-      <h2>Question Manager</h2>
-
-      <button
-        class="btn btn-primary"
-        onclick="newQuestion()"
-      >
-        ＋ New Question
-      </button>
-
-    </div>
-
-
-    <div id="questionEditor" class="hidden">
-
-      <div class="question-editor">
-
-        <h3 id="editorTitle">
-          New Question
-        </h3>
-
-        <div class="form-group">
-
-          <label>Question</label>
-
-          <textarea
-            id="qText"
-            rows="3"
-            placeholder="Question likhein..."
-          ></textarea>
-
-        </div>
-
-
-        <div class="grid4">
-
-          <div class="form-group">
-            <label>Option A</label>
-            <input id="optA">
-          </div>
-
-          <div class="form-group">
-            <label>Option B</label>
-            <input id="optB">
-          </div>
-
-          <div class="form-group">
-            <label>Option C</label>
-            <input id="optC">
-          </div>
-
-          <div class="form-group">
-            <label>Option D</label>
-            <input id="optD">
-          </div>
-
-        </div>
-
-
-        <div class="grid">
-
-          <div class="form-group">
-
-            <label>
-              Correct Answer
-            </label>
-
-            <select id="correctAnswer">
-
-              <option value="A">
-                Option A
-              </option>
-
-              <option value="B">
-                Option B
-              </option>
-
-              <option value="C">
-                Option C
-              </option>
-
-              <option value="D">
-                Option D
-              </option>
-
-            </select>
-
-          </div>
-
-
-          <div class="form-group">
-
-            <label>
-              Question Timer
-            </label>
-
-            <div style="display:flex;gap:8px">
-
-              <input
-                id="timerValue"
-                type="number"
-                min="1"
-                value="30"
-              >
-
-              <select id="timerUnit">
-
-                <option value="seconds">
-                  Seconds
-                </option>
-
-                <option value="minutes">
-                  Minutes
-                </option>
-
-              </select>
-
-            </div>
-
-          </div>
-
-        </div>
-
-
-        <div style="display:flex;gap:10px">
-
-          <button
-            class="btn btn-success"
-            onclick="saveQuestion()"
-          >
-            💾 Save Question
-          </button>
-
-          <button
-            class="btn btn-secondary"
-            onclick="cancelEditor()"
-          >
-            Cancel
-          </button>
-
-        </div>
-
+  <div id="questionsPanel" class="card">
+    <div class="top"><h2>Question Manager</h2><button class="btn primary" onclick="newQuestion()">＋ New Question</button></div>
+    <div id="editor" class="hidden" style="margin-top:15px">
+      <div class="field"><label>Question</label><textarea id="qtext" rows="3"></textarea></div>
+      <div class="grid4">
+        <div class="field"><label>Option A</label><input id="a"></div>
+        <div class="field"><label>Option B</label><input id="b"></div>
+        <div class="field"><label>Option C</label><input id="c"></div>
+        <div class="field"><label>Option D</label><input id="d"></div>
       </div>
-
+      <div class="grid">
+        <div class="field"><label>Correct Answer</label><select id="answer"><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="field"><label>Timer</label><div style="display:flex;gap:8px"><input id="time" type="number" min="1" value="30"><select id="unit"><option value="seconds">Seconds</option><option value="minutes">Minutes</option></select></div></div>
+      </div>
+      <button class="btn success" onclick="saveQuestion()">💾 Save</button>
+      <button class="btn secondary" onclick="cancelEditor()">Cancel</button>
     </div>
-
-
-    <div
-      id="questionList"
-      class="question-list"
-    ></div>
-
+    <div id="questionList"></div>
   </div>
 
-
-  <!-- RESULTS -->
-
-  <div
-    id="adminResults"
-    class="card hidden"
-  >
-
-    <div class="section-title">
-
-      <h2>📊 Student Results</h2>
-
-      <button
-        class="btn btn-danger"
-        onclick="clearResults()"
-      >
-        Clear All Results
-      </button>
-
-    </div>
-
+  <div id="resultsPanel" class="card hidden">
+    <div class="top"><h2>📊 Student Results</h2><button class="btn danger" onclick="clearResults()">Clear Results</button></div>
     <div id="resultsList"></div>
-
   </div>
-
 </section>
-
 </div>
 
-
-<!-- ADMIN LOGIN -->
-
-<div
-  id="loginModal"
-  class="modal hidden"
->
-
-  <div class="modal-box">
-
-    <h2>👑 Admin Login</h2>
-
-    <p
-      style="color:#6b7280;margin:8px 0 20px"
-    >
-      Admin dashboard access ke liye PIN enter karein.
-    </p>
-
-
-    <div class="form-group">
-
-      <label>Admin PIN</label>
-
-      <input
-        id="adminPin"
-        type="password"
-        placeholder="Enter PIN"
-      >
-
-    </div>
-
-
-    <div style="display:flex;gap:10px">
-
-      <button
-        class="btn btn-primary"
-        onclick="adminLogin()"
-      >
-        Login
-      </button>
-
-      <button
-        class="btn btn-secondary"
-        onclick="closeAdminLogin()"
-      >
-        Cancel
-      </button>
-
-    </div>
-
+<div id="loginModal" class="modal hidden">
+  <div class="modalbox">
+    <h2>👑 Admin Login</h2><p class="muted">Admin PIN enter karein.</p>
+    <div class="field"><label>PIN</label><input id="pin" type="password" inputmode="numeric"></div>
+    <button class="btn primary" onclick="adminLogin()">Login</button>
+    <button class="btn secondary" onclick="closeLogin()">Cancel</button>
   </div>
-
 </div>
 
-
-<!-- DETAIL MODAL -->
-
-<div
-  id="detailModal"
-  class="modal hidden"
->
-
-  <div class="modal-box">
-
-    <div class="section-title">
-
-      <h2 id="detailTitle">
-        Student Result
-      </h2>
-
-      <button
-        class="btn btn-secondary"
-        onclick="closeDetail()"
-      >
-        ✕
-      </button>
-
-    </div>
-
-    <div id="detailContent"></div>
-
+<div id="detailModal" class="modal hidden">
+  <div class="modalbox" style="width:min(800px,100%);max-height:90vh;overflow:auto">
+    <div class="top"><h2 id="detailTitle">Result</h2><button class="btn secondary" onclick="closeDetail()">✕</button></div>
+    <div id="detail"></div>
   </div>
-
 </div>
 
+<script type="module">
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 
-<script>
-
-/* =========================================================
-   ADMIN PIN
-   ========================================================= */
-
+/* ============================================================
+   1) PASTE YOUR SUPABASE DETAILS HERE
+   ============================================================ */
+const SUPABASE_URL = "https://bqauhxgqnofhgxurgbwt.supabase.co";
+const SUPABASE_KEY = "sb_publishable_wG0Ils9H6vKPxg9fDfQ0Jw_x1py4xcV";
 const ADMIN_PIN = "15052004";
 
+const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-/* =========================================================
-   QUESTIONS
-   ========================================================= */
+let questions=[], results=[], student="", index=0, answers=[], interval=null, timeLeft=0, editingId=null;
 
-const DEFAULT_QUESTIONS = [
-  {
-    id: crypto.randomUUID(),
+const $ = id => document.getElementById(id);
+const esc = v => String(v ?? "").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
+const fmt = s => s<60 ? `${s}s` : `${Math.floor(s/60)}m${s%60?` ${s%60}s`:""}`;
 
-    text:"भारत की राजधानी क्या है?",
-
-    options:{
-      A:"मुंबई",
-      B:"नई दिल्ली",
-      C:"पटना",
-      D:"जयपुर"
-    },
-
-    correct:"B",
-
-    time:30
-  },
-
-  {
-    id:crypto.randomUUID(),
-
-    text:"5 × 6 कितना होता है?",
-
-    options:{
-      A:"20",
-      B:"25",
-      C:"30",
-      D:"35"
-    },
-
-    correct:"C",
-
-    time:20
-  }
-];
-
-
-let questions =
-  JSON.parse(
-    localStorage.getItem("protest_questions")
-  );
-
-
-if(!questions){
-
-  questions = DEFAULT_QUESTIONS;
-
-  saveQuestions();
-
+async function loadQuestions(){
+  const {data,error}=await supabase.from("questions").select("*").order("created_at",{ascending:true});
+  if(error){alert("Questions load nahi hue: "+error.message);console.error(error);return;}
+  questions=(data||[]).map(q=>({id:q.id,text:q.question_text,options:{A:q.option_a,B:q.option_b,C:q.option_c,D:q.option_d},correct:q.correct_answer,time:q.timer_seconds}));
+  renderQuestions();
+}
+async function loadResults(){
+  const {data,error}=await supabase.from("results").select("*").order("created_at",{ascending:false});
+  if(error){console.error(error);return;}
+  results=data||[];
+  renderResults();
 }
 
-
-let results =
-  JSON.parse(
-    localStorage.getItem("protest_results")
-  ) || [];
-
-
-let currentStudent = "";
-
-let currentQuestion = 0;
-
-let answers = [];
-
-let timerInterval = null;
-
-let timeLeft = 0;
-
-let editingId = null;
-
-
-/* =========================================================
-   STORAGE
-   ========================================================= */
-
-function saveQuestions(){
-
-  localStorage.setItem(
-    "protest_questions",
-    JSON.stringify(questions)
-  );
-
-}
-
-
-function saveResults(){
-
-  localStorage.setItem(
-    "protest_results",
-    JSON.stringify(results)
-  );
-
-}
-
-
-/* =========================================================
-   START TEST
-   ========================================================= */
-
-function startTest(){
-
-  const name =
-    document
-      .getElementById("studentName")
-      .value
-      .trim();
-
-
-  if(!name){
-
-    alert(
-      "Please pehle apna naam enter karein."
-    );
-
-    return;
-
-  }
-
-
-  if(questions.length === 0){
-
-    alert(
-      "Abhi koi question available nahi hai."
-    );
-
-    return;
-
-  }
-
-
-  currentStudent = name;
-
-  currentQuestion = 0;
-
-  answers =
-    new Array(questions.length)
-      .fill(null);
-
-
-  document
-    .getElementById("home")
-    .classList
-    .add("hidden");
-
-
-  document
-    .getElementById("resultSection")
-    .classList
-    .add("hidden");
-
-
-  document
-    .getElementById("testSection")
-    .classList
-    .remove("hidden");
-
-
-  document
-    .getElementById("studentDisplay")
-    .textContent =
-      "👤 " + currentStudent;
-
-
-  showQuestion();
-
-}
-
-
-/* =========================================================
-   SHOW QUESTION
-   ========================================================= */
+window.startTest=async()=>{
+  student=$("studentName").value.trim();
+  if(!student)return alert("Apna naam enter karein.");
+  await loadQuestions();
+  if(!questions.length)return alert("Admin ne abhi koi question add nahi kiya hai.");
+  index=0;answers=new Array(questions.length).fill(null);
+  $("home").classList.add("hidden");$("result").classList.add("hidden");$("admin").classList.add("hidden");$("test").classList.remove("hidden");
+  $("studentLabel").textContent="👤 "+student;showQuestion();
+};
 
 function showQuestion(){
-
-  clearInterval(timerInterval);
-
-
-  const q =
-    questions[currentQuestion];
-
-
-  document
-    .getElementById("questionCounter")
-    .textContent =
-      `Question ${currentQuestion + 1} / ${questions.length}`;
-
-
-  document
-    .getElementById("progressBar")
-    .style
-    .width =
-      `${((currentQuestion + 1) / questions.length) * 100}%`;
-
-
-  let html = `
-
-    <div class="test-question">
-      ${escapeHTML(q.text)}
-    </div>
-
-    <div class="options">
-
-  `;
-
-
-  ["A","B","C","D"].forEach(letter=>{
-
-    const selected =
-      answers[currentQuestion] === letter
-        ? "selected"
-        : "";
-
-
-    html += `
-
-      <button
-        class="option ${selected}"
-        onclick="selectAnswer('${letter}')"
-      >
-
-        <span class="option-letter">
-          ${letter}
-        </span>
-
-        ${escapeHTML(q.options[letter])}
-
-      </button>
-
-    `;
-
-  });
-
-
-  html += `</div>`;
-
-
-  document
-    .getElementById("questionArea")
-    .innerHTML = html;
-
-
-  document
-    .getElementById("prevBtn")
-    .disabled =
-      currentQuestion === 0;
-
-
-  document
-    .getElementById("nextBtn")
-    .textContent =
-      currentQuestion === questions.length - 1
-        ? "Submit Test ✓"
-        : "Next →";
-
-
+  clearInterval(interval);
+  const q=questions[index];
+  $("counter").textContent=`Question ${index+1} / ${questions.length}`;
+  $("bar").style.width=((index+1)/questions.length*100)+"%";
+  $("questionArea").innerHTML=`<div class="question">${esc(q.text)}</div><div class="options">
+  ${["A","B","C","D"].map(l=>`<button class="option ${answers[index]===l?"selected":""}" onclick="selectAnswer('${l}')"><b>${l}</b> — ${esc(q.options[l])}</button>`).join("")}</div>`;
+  $("prev").disabled=index===0;
+  $("next").textContent=index===questions.length-1?"Submit Test ✓":"Next →";
   startTimer(q.time);
-
 }
-
-
-/* =========================================================
-   SELECT ANSWER
-   ========================================================= */
-
-function selectAnswer(letter){
-
-  answers[currentQuestion] =
-    letter;
-
-
-  showQuestionWithoutResettingTimer();
-
+window.selectAnswer=l=>{answers[index]=l;showQuestionNoTimer();};
+function showQuestionNoTimer(){
+  const q=questions[index];
+  $("questionArea").innerHTML=`<div class="question">${esc(q.text)}</div><div class="options">
+  ${["A","B","C","D"].map(l=>`<button class="option ${answers[index]===l?"selected":""}" onclick="selectAnswer('${l}')"><b>${l}</b> — ${esc(q.options[l])}</button>`).join("")}</div>`;
 }
-
-
-function showQuestionWithoutResettingTimer(){
-
-  const q =
-    questions[currentQuestion];
-
-
-  let html = `
-
-    <div class="test-question">
-      ${escapeHTML(q.text)}
-    </div>
-
-    <div class="options">
-
-  `;
-
-
-  ["A","B","C","D"].forEach(letter=>{
-
-    const selected =
-      answers[currentQuestion] === letter
-        ? "selected"
-        : "";
-
-
-    html += `
-
-      <button
-        class="option ${selected}"
-        onclick="selectAnswer('${letter}')"
-      >
-
-        <span class="option-letter">
-          ${letter}
-        </span>
-
-        ${escapeHTML(q.options[letter])}
-
-      </button>
-
-    `;
-
-  });
-
-
-  html += `</div>`;
-
-
-  document
-    .getElementById("questionArea")
-    .innerHTML = html;
-
+function startTimer(s){
+  timeLeft=s;updateTimer();
+  interval=setInterval(()=>{timeLeft--;updateTimer();if(timeLeft<=0){clearInterval(interval);nextQ();}},1000);
 }
-
-
-/* =========================================================
-   TIMER
-   ========================================================= */
-
-function startTimer(seconds){
-
-  timeLeft = seconds;
-
-  updateTimer();
-
-
-  timerInterval =
-    setInterval(()=>{
-
-      timeLeft--;
-
-      updateTimer();
-
-
-      if(timeLeft <= 0){
-
-        clearInterval(timerInterval);
-
-        autoNext();
-
-      }
-
-    },1000);
-
-}
-
-
 function updateTimer(){
-
-  const timer =
-    document.getElementById("timer");
-
-
-  const min =
-    Math.floor(timeLeft / 60);
-
-
-  const sec =
-    timeLeft % 60;
-
-
-  timer.textContent =
-    `${String(min).padStart(2,"0")}:${String(sec).padStart(2,"0")}`;
-
-
-  timer.classList.toggle(
-    "warning",
-    timeLeft <= 10
-  );
-
+  $("timer").textContent=`${String(Math.floor(timeLeft/60)).padStart(2,"0")}:${String(timeLeft%60).padStart(2,"0")}`;
+  $("timer").classList.toggle("warning",timeLeft<=10);
 }
+window.nextQ=()=>{if(index===questions.length-1){if(confirm("Test submit karein?"))submitTest();}else{index++;showQuestion();}};
+window.prevQ=()=>{if(index>0){index--;showQuestion();}};
 
-
-/* =========================================================
-   NEXT / PREVIOUS
-   ========================================================= */
-
-function autoNext(){
-
-  if(
-    currentQuestion ===
-    questions.length - 1
-  ){
-
-    submitTest();
-
-  }else{
-
-    currentQuestion++;
-
-    showQuestion();
-
-  }
-
-}
-
-
-function nextQuestion(){
-
-  if(
-    currentQuestion ===
-    questions.length - 1
-  ){
-
-    if(
-      confirm(
-        "Kya aap test submit karna chahte hain?"
-      )
-    ){
-
-      submitTest();
-
-    }
-
-  }else{
-
-    currentQuestion++;
-
-    showQuestion();
-
-  }
-
-}
-
-
-function previousQuestion(){
-
-  if(currentQuestion > 0){
-
-    currentQuestion--;
-
-    showQuestion();
-
-  }
-
-}
-
-/* =========================================================
-   SUBMIT
-   ========================================================= */
-
-function submitTest(){
-
-  clearInterval(timerInterval);
-
-  let correct = 0;
-  let wrong = 0;
-  let unanswered = 0;
-
-  questions.forEach((q,i)=>{
-
-    if(!answers[i]){
-      unanswered++;
-    }
-    else if(answers[i] === q.correct){
-      correct++;
-    }
-    else{
-      wrong++;
-    }
-
+async function submitTest(){
+  clearInterval(interval);
+  let correct=0,wrong=0,unanswered=0;
+  questions.forEach((q,i)=>{if(!answers[i])unanswered++;else if(answers[i]===q.correct)correct++;else wrong++;});
+  const pct=Math.round(correct/questions.length*100);
+  const payload={student_name:student,total:questions.length,correct,wrong,unanswered,percentage:pct,answers:answers.map((answer,i)=>({question_id:questions[i].id,answer,correct_answer:questions[i].correct}))};
+  const {error}=await supabase.from("results").insert(payload);
+  if(error){alert("Result save nahi hua: "+error.message);console.error(error);return;}
+  $("test").classList.add("hidden");$("result").classList.remove("hidden");
+  $("resultStudent").textContent=student+" • "+new Date().toLocaleString();
+  $("score").textContent=pct+"%";$("correct").textContent=correct;$("wrong").textContent=wrong;
+  let html="<h2>📋 Question-wise Review</h2>";
+  questions.forEach((q,i)=>{const a=answers[i],cl=!a?"unanswered":a===q.correct?"correct":"wrong";
+    html+=`<div class="review ${cl}"><b>Q${i+1}. ${esc(q.text)}</b><p>Your Answer: <b>${a?esc(a+". "+q.options[a]):"Not Answered"}</b></p><p>Correct Answer: <b>${esc(q.correct+". "+q.options[q.correct])}</b></p></div>`;
   });
-
-  const percentage = Math.round((correct / questions.length) * 100);
-
-  const result = {
-    id:crypto.randomUUID(),
-    student:currentStudent,
-    date:new Date().toLocaleString(),
-    total:questions.length,
-    correct,
-    wrong,
-    unanswered,
-    percentage,
-    answers:[...answers]
-  };
-
-  results.push(result);
-  saveResults();
-
-  document.getElementById("testSection").classList.add("hidden");
-  document.getElementById("resultSection").classList.remove("hidden");
-
-  document.getElementById("resultStudent").textContent = `${currentStudent} • ${result.date}`;
-  document.getElementById("scorePercentage").textContent = percentage + "%";
-  document.getElementById("totalResult").textContent = questions.length;
-  document.getElementById("correctResult").textContent = correct;
-  document.getElementById("wrongResult").textContent = wrong;
-
-  showStudentReview(result);
-
+  $("studentReview").innerHTML=html;
 }
 
-/* =========================================================
-   STUDENT REVIEW
-   ========================================================= */
+window.openLogin=()=>{$("loginModal").classList.remove("hidden");$("pin").focus();};
+window.closeLogin=()=>{$("loginModal").classList.add("hidden");$("pin").value="";};
+window.adminLogin=async()=>{
+  if($("pin").value!==ADMIN_PIN)return alert("Incorrect Admin PIN.");
+  closeLogin();$("home").classList.add("hidden");$("test").classList.add("hidden");$("result").classList.add("hidden");$("admin").classList.remove("hidden");
+  await loadQuestions();await loadResults();
+};
+window.logoutAdmin=()=>{$("admin").classList.add("hidden");$("home").classList.remove("hidden");};
+window.adminTab=t=>{
+  $("questionsPanel").classList.toggle("hidden",t!=="questions");$("resultsPanel").classList.toggle("hidden",t!=="results");
+  $("qtab").classList.toggle("active",t==="questions");$("rtab").classList.toggle("active",t==="results");
+  if(t==="results")loadResults();
+};
 
-function showStudentReview(result){
-
-  let html = "<h2>📋 Question-wise Review</h2>";
-
-  questions.forEach((q,i)=>{
-
-    const answer = result.answers[i];
-    let type = "review-unanswered";
-    let badge = `<span class="badge badge-orange">Not Answered</span>`;
-
-    if(answer === q.correct){
-      type = "review-correct";
-      badge = `<span class="badge badge-green">✓ Correct</span>`;
-    }
-    else if(answer){
-      type = "review-wrong";
-      badge = `<span class="badge badge-red">✕ Wrong</span>`;
-    }
-
-    html += `
-      <div class="review-item ${type}">
-        <strong>Q${i+1}. ${escapeHTML(q.text)}</strong>
-        <p>Your Answer: <strong>${answer ? answer + ". " + escapeHTML(q.options[answer]) : "Not Answered"}</strong></p>
-        <p>Correct Answer: <strong>${q.correct}. ${escapeHTML(q.options[q.correct])}</strong></p>
-        ${badge}
-      </div>
-    `;
-
-  });
-
-  document.getElementById("studentReview").innerHTML = html;
-
-}
-
-/* =========================================================
-   ADMIN LOGIN
-   ========================================================= */
-
-function openAdminLogin(){
-  document.getElementById("loginModal").classList.remove("hidden");
-  document.getElementById("adminPin").focus();
-}
-
-function closeAdminLogin(){
-  document.getElementById("loginModal").classList.add("hidden");
-  document.getElementById("adminPin").value = "";
-}
-
-function adminLogin(){
-
-  const pin = document.getElementById("adminPin").value;
-
-  if(pin !== ADMIN_PIN){
-    alert("Incorrect Admin PIN.");
-    return;
-  }
-
-  closeAdminLogin();
-
-  document.getElementById("home").classList.add("hidden");
-  document.getElementById("testSection").classList.add("hidden");
-  document.getElementById("resultSection").classList.add("hidden");
-  document.getElementById("adminSection").classList.remove("hidden");
-
-  renderQuestions();
-  renderResults();
-}
-
-function closeAdmin(){
-  document.getElementById("adminSection").classList.add("hidden");
-  document.getElementById("home").classList.remove("hidden");
-}
-
-/* =========================================================
-   ADMIN TABS
-   ========================================================= */
-
-function showAdminTab(tab,button){
-
-  document.querySelectorAll(".tab").forEach(x => x.classList.remove("active"));
-  button.classList.add("active");
-
-  if(tab === "questions"){
-    document.getElementById("adminQuestions").classList.remove("hidden");
-    document.getElementById("adminResults").classList.add("hidden");
-  }
-  else{
-    document.getElementById("adminQuestions").classList.add("hidden");
-    document.getElementById("adminResults").classList.remove("hidden");
-    renderResults();
-  }
-}
-
-/* =========================================================
-   QUESTION MANAGER
-   ========================================================= */
-
-function newQuestion(){
-
-  editingId = null;
-  document.getElementById("editorTitle").textContent = "New Question";
-  document.getElementById("qText").value = "";
-  document.getElementById("optA").value = "";
-  document.getElementById("optB").value = "";
-  document.getElementById("optC").value = "";
-  document.getElementById("optD").value = "";
-  document.getElementById("correctAnswer").value = "A";
-  document.getElementById("timerValue").value = "30";
-  document.getElementById("timerUnit").value = "seconds";
-  document.getElementById("questionEditor").classList.remove("hidden");
-}
-
-function cancelEditor(){
-  document.getElementById("questionEditor").classList.add("hidden");
-  editingId = null;
-}
-
-function saveQuestion(){
-
-  const text = document.getElementById("qText").value.trim();
-
-  const options = {
-    A:document.getElementById("optA").value.trim(),
-    B:document.getElementById("optB").value.trim(),
-    C:document.getElementById("optC").value.trim(),
-    D:document.getElementById("optD").value.trim()
-  };
-
-  const correct = document.getElementById("correctAnswer").value;
-  let timer = Number(document.getElementById("timerValue").value);
-  const unit = document.getElementById("timerUnit").value;
-
-  if(unit === "minutes") timer *= 60;
-
-  if(!text || !options.A || !options.B || !options.C || !options.D){
-    alert("Question aur chaaron options bharna zaroori hai.");
-    return;
-  }
-
-  if(timer < 1){
-    alert("Timer kam se kam 1 second hona chahiye.");
-    return;
-  }
-
-  if(editingId){
-    const q = questions.find(x => x.id === editingId);
-    if(q){
-      q.text = text;
-      q.options = options;
-      q.correct = correct;
-      q.time = timer;
-    }
-  }
-  else{
-    questions.push({
-      id:crypto.randomUUID(),
-      text,
-      options,
-      correct,
-      time:timer
-    });
-  }
-
-  saveQuestions();
-  cancelEditor();
-  renderQuestions();
-}
-
-function editQuestion(id){
-
-  const q = questions.find(x => x.id === id);
-  if(!q) return;
-
-  editingId = id;
-  document.getElementById("editorTitle").textContent = "Edit Question";
-  document.getElementById("qText").value = q.text;
-  document.getElementById("optA").value = q.options.A;
-  document.getElementById("optB").value = q.options.B;
-  document.getElementById("optC").value = q.options.C;
-  document.getElementById("optD").value = q.options.D;
-  document.getElementById("correctAnswer").value = q.correct;
-  document.getElementById("timerValue").value = q.time >= 60 && q.time % 60 === 0 ? q.time / 60 : q.time;
-  document.getElementById("timerUnit").value = q.time >= 60 && q.time % 60 === 0 ? "minutes" : "seconds";
-  document.getElementById("questionEditor").classList.remove("hidden");
-}
-
-function deleteQuestion(id){
-
-  if(!confirm("Kya aap is question ko delete karna chahte hain?")) return;
-
-  questions = questions.filter(q => q.id !== id);
-  saveQuestions();
-  renderQuestions();
-}
-
+window.newQuestion=()=>{
+  editingId=null;$("editor").classList.remove("hidden");
+  ["qtext","a","b","c","d"].forEach(id=>$(id).value="");$("answer").value="A";$("time").value=30;$("unit").value="seconds";
+};
+window.cancelEditor=()=>{$("editor").classList.add("hidden");editingId=null;};
+window.saveQuestion=async()=>{
+  const text=$("qtext").value.trim(), A=$("a").value.trim(),B=$("b").value.trim(),C=$("c").value.trim(),D=$("d").value.trim();
+  let t=Number($("time").value);if($("unit").value==="minutes")t*=60;
+  if(!text||!A||!B||!C||!D||t<1)return alert("Question, 4 options aur timer sahi se bharein.");
+  const row={question_text:text,option_a:A,option_b:B,option_c:C,option_d:D,correct_answer:$("answer").value,timer_seconds:t};
+  let res;
+  if(editingId)res=await supabase.from("questions").update(row).eq("id",editingId);
+  else res=await supabase.from("questions").insert(row);
+  if(res.error)return alert("Save error: "+res.error.message);
+  cancelEditor();await loadQuestions();
+};
+window.editQuestion=async id=>{
+  const q=questions.find(x=>x.id===id);if(!q)return;editingId=id;$("editor").classList.remove("hidden");
+  $("qtext").value=q.text;$("a").value=q.options.A;$("b").value=q.options.B;$("c").value=q.options.C;$("d").value=q.options.D;$("answer").value=q.correct;
+  $("time").value=q.time>=60&&q.time%60===0?q.time/60:q.time;$("unit").value=q.time>=60&&q.time%60===0?"minutes":"seconds";
+};
+window.deleteQuestion=async id=>{
+  if(!confirm("Question delete karein?"))return;
+  const {error}=await supabase.from("questions").delete().eq("id",id);
+  if(error)return alert(error.message);await loadQuestions();
+};
 function renderQuestions(){
-
-  const list = document.getElementById("questionList");
-
-  if(questions.length === 0){
-    list.innerHTML = `
-      <div class="empty">
-        <h3>Abhi koi question nahi hai.</h3>
-        <p>＋ New Question par click karke question add karein.</p>
-      </div>
-    `;
-    return;
-  }
-
-  list.innerHTML = questions.map((q,i)=>`
-    <div class="question-item">
-      <div>
-        <strong>Q${i+1}. ${escapeHTML(q.text)}</strong><br>
-        <small>Correct: ${q.correct} • Timer: ${formatTime(q.time)}</small>
-      </div>
-      <div style="display:flex;gap:7px">
-        <button class="btn btn-secondary" onclick="editQuestion('${q.id}')">Edit</button>
-        <button class="btn btn-danger" onclick="deleteQuestion('${q.id}')">Delete</button>
-      </div>
-    </div>
-  `).join("");
+  $("questionList").innerHTML=questions.length?questions.map((q,i)=>`<div class="qitem"><div><b>Q${i+1}. ${esc(q.text)}</b><br><span class="muted">Correct: ${q.correct} • Timer: ${fmt(q.time)}</span></div><div><button class="btn secondary" onclick="editQuestion('${q.id}')">Edit</button> <button class="btn danger" onclick="deleteQuestion('${q.id}')">Delete</button></div></div>`).join(""):`<p class="muted">No questions yet.</p>`;
 }
-
-/* =========================================================
-   RESULTS
-   ========================================================= */
-
 function renderResults(){
-
-  const box = document.getElementById("resultsList");
-
-  if(results.length === 0){
-    box.innerHTML = `
-      <div class="empty">
-        <h3>📭 No Results</h3>
-        <p>Abhi kisi student ne test submit nahi kiya.</p>
-      </div>
-    `;
-    return;
-  }
-
-  box.innerHTML = `
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Student</th>
-            <th>Date</th>
-            <th>Total</th>
-            <th>Correct</th>
-            <th>Wrong</th>
-            <th>Score</th>
-            <th>Details</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${results.slice().reverse().map(r=>`
-            <tr>
-              <td><strong>${escapeHTML(r.student)}</strong></td>
-              <td>${escapeHTML(r.date)}</td>
-              <td>${r.total}</td>
-              <td><span class="badge badge-green">${r.correct}</span></td>
-              <td><span class="badge badge-red">${r.wrong}</span></td>
-              <td><strong>${r.percentage}%</strong></td>
-              <td><button class="btn btn-secondary" onclick="viewResult('${r.id}')">View</button></td>
-            </tr>
-          `).join("")}
-        </tbody>
-      </table>
-    </div>
-  `;
+  $("resultsList").innerHTML=results.length?`<div class="table"><table><thead><tr><th>Student</th><th>Date</th><th>Total</th><th>Correct</th><th>Wrong</th><th>Score</th><th></th></tr></thead><tbody>${results.map(r=>`<tr><td><b>${esc(r.student_name)}</b></td><td>${esc(new Date(r.created_at).toLocaleString())}</td><td>${r.total}</td><td>${r.correct}</td><td>${r.wrong}</td><td>${r.percentage}%</td><td><button class="btn secondary" onclick="viewResult('${r.id}')">View</button></td></tr>`).join("")}</tbody></table></div>`:`<p class="muted">No student results yet.</p>`;
 }
+window.viewResult=id=>{
+  const r=results.find(x=>x.id===id);if(!r)return;$("detailTitle").textContent="📊 "+r.student_name;
+  const amap=new Map((r.answers||[]).map(x=>[x.question_id,x]));
+  let h=`<div class="stats"><div class="stat"><b>${r.percentage}%</b>Score</div><div class="stat"><b>${r.correct}</b>Correct</div><div class="stat"><b>${r.wrong}</b>Wrong</div></div>`;
+  questions.forEach((q,i)=>{const a=amap.get(q.id)?.answer,cl=!a?"unanswered":a===q.correct?"correct":"wrong";h+=`<div class="review ${cl}"><b>Q${i+1}. ${esc(q.text)}</b><p>Student: <b>${a?esc(a+". "+q.options[a]):"Not Answered"}</b></p><p>Correct: <b>${esc(q.correct+". "+q.options[q.correct])}</b></p></div>`});
+  $("detail").innerHTML=h;$("detailModal").classList.remove("hidden");
+};
+window.closeDetail=()=>{$("detailModal").classList.add("hidden");};
+window.clearResults=async()=>{if(!confirm("Saare results delete karein?"))return;const {error}=await supabase.from("results").delete().neq("id","00000000-0000-0000-0000-000000000000");if(error)return alert(error.message);await loadResults();};
 
-function viewResult(id){
-
-  const result = results.find(r => r.id === id);
-  if(!result) return;
-
-  document.getElementById("detailTitle").textContent = "📊 " + result.student;
-
-  let html = `
-    <div class="result-stats">
-      <div class="result-box"><strong>${result.percentage}%</strong>Score</div>
-      <div class="result-box"><strong>${result.correct}</strong>Correct</div>
-      <div class="result-box"><strong>${result.wrong}</strong>Wrong</div>
-    </div>
-    <p style="margin-bottom:18px;color:#6b7280">Submitted: ${escapeHTML(result.date)}</p>
-  `;
-
-  questions.forEach((q,i)=>{
-
-    const answer = result.answers[i];
-    let statusClass = "review-unanswered";
-    let badge = `<span class="badge badge-orange">Not Answered</span>`;
-
-    if(answer === q.correct){
-      statusClass = "review-correct";
-      badge = `<span class="badge badge-green">✓ Correct</span>`;
-    }
-    else if(answer){
-      statusClass = "review-wrong";
-      badge = `<span class="badge badge-red">✕ Wrong</span>`;
-    }
-
-    html += `
-      <div class="review-item ${statusClass}">
-        <strong>Q${i+1}. ${escapeHTML(q.text)}</strong>
-        <p>Student Answer: <strong>${answer ? answer + ". " + escapeHTML(q.options[answer]) : "Not Answered"}</strong></p>
-        <p>Correct Answer: <strong>${q.correct}. ${escapeHTML(q.options[q.correct])}</strong></p>
-        ${badge}
-      </div>
-    `;
-  });
-
-  document.getElementById("detailContent").innerHTML = html;
-  document.getElementById("detailModal").classList.remove("hidden");
+if(SUPABASE_URL.includes("PASTE_")||SUPABASE_KEY.includes("PASTE_")){
+  console.warn("Supabase config missing. Paste URL and publishable key in index.html.");
 }
-
-function closeDetail(){
-  document.getElementById("detailModal").classList.add("hidden");
-}
-
-function clearResults(){
-
-  if(!confirm("Kya aap ALL student results delete karna chahte hain?")) return;
-
-  results = [];
-  saveResults();
-  renderResults();
-}
-
-/* =========================================================
-   HELPERS
-   ========================================================= */
-
-function formatTime(seconds){
-
-  if(seconds < 60) return seconds + " sec";
-
-  const minutes = Math.floor(seconds / 60);
-  const sec = seconds % 60;
-
-  if(sec === 0) return minutes + " min";
-
-  return `${minutes}m ${sec}s`;
-}
-
-function escapeHTML(value){
-
-  return String(value)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-}
-
 </script>
-
 </body>
 </html>
