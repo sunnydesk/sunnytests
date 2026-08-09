@@ -1369,4 +1369,434 @@ function nextQuestion(){
 
 function previousQuestion(){
 
-  if(curre
+  if(currentQuestion > 0){
+
+    currentQuestion--;
+
+    showQuestion();
+
+  }
+
+}
+
+/* =========================================================
+   SUBMIT
+   ========================================================= */
+
+function submitTest(){
+
+  clearInterval(timerInterval);
+
+  let correct = 0;
+  let wrong = 0;
+  let unanswered = 0;
+
+  questions.forEach((q,i)=>{
+
+    if(!answers[i]){
+      unanswered++;
+    }
+    else if(answers[i] === q.correct){
+      correct++;
+    }
+    else{
+      wrong++;
+    }
+
+  });
+
+  const percentage = Math.round((correct / questions.length) * 100);
+
+  const result = {
+    id:crypto.randomUUID(),
+    student:currentStudent,
+    date:new Date().toLocaleString(),
+    total:questions.length,
+    correct,
+    wrong,
+    unanswered,
+    percentage,
+    answers:[...answers]
+  };
+
+  results.push(result);
+  saveResults();
+
+  document.getElementById("testSection").classList.add("hidden");
+  document.getElementById("resultSection").classList.remove("hidden");
+
+  document.getElementById("resultStudent").textContent = `${currentStudent} • ${result.date}`;
+  document.getElementById("scorePercentage").textContent = percentage + "%";
+  document.getElementById("totalResult").textContent = questions.length;
+  document.getElementById("correctResult").textContent = correct;
+  document.getElementById("wrongResult").textContent = wrong;
+
+  showStudentReview(result);
+
+}
+
+/* =========================================================
+   STUDENT REVIEW
+   ========================================================= */
+
+function showStudentReview(result){
+
+  let html = "<h2>📋 Question-wise Review</h2>";
+
+  questions.forEach((q,i)=>{
+
+    const answer = result.answers[i];
+    let type = "review-unanswered";
+    let badge = `<span class="badge badge-orange">Not Answered</span>`;
+
+    if(answer === q.correct){
+      type = "review-correct";
+      badge = `<span class="badge badge-green">✓ Correct</span>`;
+    }
+    else if(answer){
+      type = "review-wrong";
+      badge = `<span class="badge badge-red">✕ Wrong</span>`;
+    }
+
+    html += `
+      <div class="review-item ${type}">
+        <strong>Q${i+1}. ${escapeHTML(q.text)}</strong>
+        <p>Your Answer: <strong>${answer ? answer + ". " + escapeHTML(q.options[answer]) : "Not Answered"}</strong></p>
+        <p>Correct Answer: <strong>${q.correct}. ${escapeHTML(q.options[q.correct])}</strong></p>
+        ${badge}
+      </div>
+    `;
+
+  });
+
+  document.getElementById("studentReview").innerHTML = html;
+
+}
+
+/* =========================================================
+   ADMIN LOGIN
+   ========================================================= */
+
+function openAdminLogin(){
+  document.getElementById("loginModal").classList.remove("hidden");
+  document.getElementById("adminPin").focus();
+}
+
+function closeAdminLogin(){
+  document.getElementById("loginModal").classList.add("hidden");
+  document.getElementById("adminPin").value = "";
+}
+
+function adminLogin(){
+
+  const pin = document.getElementById("adminPin").value;
+
+  if(pin !== ADMIN_PIN){
+    alert("Incorrect Admin PIN.");
+    return;
+  }
+
+  closeAdminLogin();
+
+  document.getElementById("home").classList.add("hidden");
+  document.getElementById("testSection").classList.add("hidden");
+  document.getElementById("resultSection").classList.add("hidden");
+  document.getElementById("adminSection").classList.remove("hidden");
+
+  renderQuestions();
+  renderResults();
+}
+
+function closeAdmin(){
+  document.getElementById("adminSection").classList.add("hidden");
+  document.getElementById("home").classList.remove("hidden");
+}
+
+/* =========================================================
+   ADMIN TABS
+   ========================================================= */
+
+function showAdminTab(tab,button){
+
+  document.querySelectorAll(".tab").forEach(x => x.classList.remove("active"));
+  button.classList.add("active");
+
+  if(tab === "questions"){
+    document.getElementById("adminQuestions").classList.remove("hidden");
+    document.getElementById("adminResults").classList.add("hidden");
+  }
+  else{
+    document.getElementById("adminQuestions").classList.add("hidden");
+    document.getElementById("adminResults").classList.remove("hidden");
+    renderResults();
+  }
+}
+
+/* =========================================================
+   QUESTION MANAGER
+   ========================================================= */
+
+function newQuestion(){
+
+  editingId = null;
+  document.getElementById("editorTitle").textContent = "New Question";
+  document.getElementById("qText").value = "";
+  document.getElementById("optA").value = "";
+  document.getElementById("optB").value = "";
+  document.getElementById("optC").value = "";
+  document.getElementById("optD").value = "";
+  document.getElementById("correctAnswer").value = "A";
+  document.getElementById("timerValue").value = "30";
+  document.getElementById("timerUnit").value = "seconds";
+  document.getElementById("questionEditor").classList.remove("hidden");
+}
+
+function cancelEditor(){
+  document.getElementById("questionEditor").classList.add("hidden");
+  editingId = null;
+}
+
+function saveQuestion(){
+
+  const text = document.getElementById("qText").value.trim();
+
+  const options = {
+    A:document.getElementById("optA").value.trim(),
+    B:document.getElementById("optB").value.trim(),
+    C:document.getElementById("optC").value.trim(),
+    D:document.getElementById("optD").value.trim()
+  };
+
+  const correct = document.getElementById("correctAnswer").value;
+  let timer = Number(document.getElementById("timerValue").value);
+  const unit = document.getElementById("timerUnit").value;
+
+  if(unit === "minutes") timer *= 60;
+
+  if(!text || !options.A || !options.B || !options.C || !options.D){
+    alert("Question aur chaaron options bharna zaroori hai.");
+    return;
+  }
+
+  if(timer < 1){
+    alert("Timer kam se kam 1 second hona chahiye.");
+    return;
+  }
+
+  if(editingId){
+    const q = questions.find(x => x.id === editingId);
+    if(q){
+      q.text = text;
+      q.options = options;
+      q.correct = correct;
+      q.time = timer;
+    }
+  }
+  else{
+    questions.push({
+      id:crypto.randomUUID(),
+      text,
+      options,
+      correct,
+      time:timer
+    });
+  }
+
+  saveQuestions();
+  cancelEditor();
+  renderQuestions();
+}
+
+function editQuestion(id){
+
+  const q = questions.find(x => x.id === id);
+  if(!q) return;
+
+  editingId = id;
+  document.getElementById("editorTitle").textContent = "Edit Question";
+  document.getElementById("qText").value = q.text;
+  document.getElementById("optA").value = q.options.A;
+  document.getElementById("optB").value = q.options.B;
+  document.getElementById("optC").value = q.options.C;
+  document.getElementById("optD").value = q.options.D;
+  document.getElementById("correctAnswer").value = q.correct;
+  document.getElementById("timerValue").value = q.time >= 60 && q.time % 60 === 0 ? q.time / 60 : q.time;
+  document.getElementById("timerUnit").value = q.time >= 60 && q.time % 60 === 0 ? "minutes" : "seconds";
+  document.getElementById("questionEditor").classList.remove("hidden");
+}
+
+function deleteQuestion(id){
+
+  if(!confirm("Kya aap is question ko delete karna chahte hain?")) return;
+
+  questions = questions.filter(q => q.id !== id);
+  saveQuestions();
+  renderQuestions();
+}
+
+function renderQuestions(){
+
+  const list = document.getElementById("questionList");
+
+  if(questions.length === 0){
+    list.innerHTML = `
+      <div class="empty">
+        <h3>Abhi koi question nahi hai.</h3>
+        <p>＋ New Question par click karke question add karein.</p>
+      </div>
+    `;
+    return;
+  }
+
+  list.innerHTML = questions.map((q,i)=>`
+    <div class="question-item">
+      <div>
+        <strong>Q${i+1}. ${escapeHTML(q.text)}</strong><br>
+        <small>Correct: ${q.correct} • Timer: ${formatTime(q.time)}</small>
+      </div>
+      <div style="display:flex;gap:7px">
+        <button class="btn btn-secondary" onclick="editQuestion('${q.id}')">Edit</button>
+        <button class="btn btn-danger" onclick="deleteQuestion('${q.id}')">Delete</button>
+      </div>
+    </div>
+  `).join("");
+}
+
+/* =========================================================
+   RESULTS
+   ========================================================= */
+
+function renderResults(){
+
+  const box = document.getElementById("resultsList");
+
+  if(results.length === 0){
+    box.innerHTML = `
+      <div class="empty">
+        <h3>📭 No Results</h3>
+        <p>Abhi kisi student ne test submit nahi kiya.</p>
+      </div>
+    `;
+    return;
+  }
+
+  box.innerHTML = `
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Student</th>
+            <th>Date</th>
+            <th>Total</th>
+            <th>Correct</th>
+            <th>Wrong</th>
+            <th>Score</th>
+            <th>Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${results.slice().reverse().map(r=>`
+            <tr>
+              <td><strong>${escapeHTML(r.student)}</strong></td>
+              <td>${escapeHTML(r.date)}</td>
+              <td>${r.total}</td>
+              <td><span class="badge badge-green">${r.correct}</span></td>
+              <td><span class="badge badge-red">${r.wrong}</span></td>
+              <td><strong>${r.percentage}%</strong></td>
+              <td><button class="btn btn-secondary" onclick="viewResult('${r.id}')">View</button></td>
+            </tr>
+          `).join("")}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+function viewResult(id){
+
+  const result = results.find(r => r.id === id);
+  if(!result) return;
+
+  document.getElementById("detailTitle").textContent = "📊 " + result.student;
+
+  let html = `
+    <div class="result-stats">
+      <div class="result-box"><strong>${result.percentage}%</strong>Score</div>
+      <div class="result-box"><strong>${result.correct}</strong>Correct</div>
+      <div class="result-box"><strong>${result.wrong}</strong>Wrong</div>
+    </div>
+    <p style="margin-bottom:18px;color:#6b7280">Submitted: ${escapeHTML(result.date)}</p>
+  `;
+
+  questions.forEach((q,i)=>{
+
+    const answer = result.answers[i];
+    let statusClass = "review-unanswered";
+    let badge = `<span class="badge badge-orange">Not Answered</span>`;
+
+    if(answer === q.correct){
+      statusClass = "review-correct";
+      badge = `<span class="badge badge-green">✓ Correct</span>`;
+    }
+    else if(answer){
+      statusClass = "review-wrong";
+      badge = `<span class="badge badge-red">✕ Wrong</span>`;
+    }
+
+    html += `
+      <div class="review-item ${statusClass}">
+        <strong>Q${i+1}. ${escapeHTML(q.text)}</strong>
+        <p>Student Answer: <strong>${answer ? answer + ". " + escapeHTML(q.options[answer]) : "Not Answered"}</strong></p>
+        <p>Correct Answer: <strong>${q.correct}. ${escapeHTML(q.options[q.correct])}</strong></p>
+        ${badge}
+      </div>
+    `;
+  });
+
+  document.getElementById("detailContent").innerHTML = html;
+  document.getElementById("detailModal").classList.remove("hidden");
+}
+
+function closeDetail(){
+  document.getElementById("detailModal").classList.add("hidden");
+}
+
+function clearResults(){
+
+  if(!confirm("Kya aap ALL student results delete karna chahte hain?")) return;
+
+  results = [];
+  saveResults();
+  renderResults();
+}
+
+/* =========================================================
+   HELPERS
+   ========================================================= */
+
+function formatTime(seconds){
+
+  if(seconds < 60) return seconds + " sec";
+
+  const minutes = Math.floor(seconds / 60);
+  const sec = seconds % 60;
+
+  if(sec === 0) return minutes + " min";
+
+  return `${minutes}m ${sec}s`;
+}
+
+function escapeHTML(value){
+
+  return String(value)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+</script>
+
+</body>
+</html>
