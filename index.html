@@ -104,7 +104,7 @@ header{
 .drawer a:hover,.drawer button:hover{background:rgba(255,255,255,.06)}
 .drawer .active{background:linear-gradient(90deg,rgba(79,124,255,.2),transparent);color:#fff}
 
-/* ========== HERO BANNER + FLOATING CARD ========== */
+/* ========== HERO BANNER ========== */
 .hero{padding:26px 0 10px}
 .hero-pills{display:flex;gap:10px;margin-bottom:22px;flex-wrap:wrap}
 .pill{
@@ -116,14 +116,46 @@ header{
 .pill.glass{background:rgba(255,255,255,.05);color:var(--text)}
 .pill:hover{transform:translateY(-2px)}
 
-.hero-stats-row{
- display:grid;grid-template-columns:repeat(3,1fr);gap:14px;
- margin-bottom:24px;max-width:560px;
+/* ========== SUNNY HUB PROFILE CARD (FROM SCREENSHOT) ========== */
+.hub-card{
+ background:rgba(14,23,45,.7);
+ border:1px solid rgba(255,255,255,.08);
+ border-radius:28px;
+ padding:22px;
+ margin-bottom:20px;
+ backdrop-filter:blur(16px);
+ box-shadow:0 20px 50px rgba(0,0,0,.3);
 }
-.stat-box b{display:block;font-size:26px;font-weight:1000;letter-spacing:-.5px}
-.stat-box span{display:block;font-size:11px;color:var(--muted);margin-top:2px;font-weight:600}
+.hub-header{
+ display:flex;align-items:center;gap:14px;margin-bottom:18px;
+}
+.hub-avatar{
+ width:50px;height:50px;border-radius:18px;
+ background:linear-gradient(135deg,#6366f1,#818cf8);
+ display:grid;place-items:center;font-size:22px;font-weight:1000;color:#fff;
+ box-shadow:0 8px 24px rgba(99,102,241,.35);
+}
+.hub-header h3{font-size:18px;font-weight:950;margin-bottom:2px}
+.hub-header p{font-size:12px;color:var(--muted);font-weight:600}
 
-/* SHINE CARD */
+.hub-grid{
+ display:grid;grid-template-columns:repeat(2,1fr);gap:10px;
+}
+.hub-item{
+ background:rgba(255,255,255,.03);
+ border:1px solid rgba(255,255,255,.06);
+ border-radius:16px;padding:14px 16px;
+}
+.hub-item b{display:block;font-size:20px;font-weight:1000;letter-spacing:-.5px}
+.hub-item span{display:block;font-size:11px;color:var(--muted);margin-top:3px;font-weight:600}
+
+.hub-quote{
+ margin-top:12px;padding:12px 16px;border-radius:14px;
+ background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.05);
+ color:var(--muted);font-size:12px;font-style:italic;
+}
+
+/* ========== ANIMATED STUDY REVISE SHINE CARD (VIDEO ANIMATION) ========== */
 .shine-stage{
  position:relative;border-radius:32px;overflow:hidden;
  background:linear-gradient(145deg,#0c152d,#131f42 55%,#0d1732);
@@ -144,6 +176,7 @@ header{
  border:1px solid rgba(255,255,255,.12);color:#fff;box-shadow:0 12px 30px rgba(0,0,0,.35);
  display:inline-flex;align-items:center;gap:6px;
  animation:bob 4s ease-in-out infinite alternate;
+ z-index:4;
 }
 .badge-quick{top:32px;left:34px;animation-delay:0s}
 .badge-exam{bottom:36px;left:40px;animation-delay:1.2s}
@@ -281,7 +314,7 @@ header{
 .tag.ok{background:rgba(34,197,94,.12);color:#4ade80}
 .desc{font-size:12px;color:var(--muted);line-height:1.65;margin-bottom:14px}
 
-/* ========== ACTION BUTTONS (DOWNLOAD & VIEW) ========== */
+/* ========== ACTION BUTTONS ========== */
 .actions{display:grid;grid-template-columns:1fr;gap:8px}
 .action{
  border:1px solid var(--line);background:var(--panel);color:var(--text);
@@ -345,7 +378,6 @@ header{
 
 @media(max-width:780px){
  .grid{grid-template-columns:1fr}
- .hero-stats-row{max-width:100%}
 }
 @media(max-width:600px){
  .class-grid{grid-template-columns:1fr}
@@ -369,7 +401,6 @@ header{
 
 <div class="scroll-progress" id="scrollProgress"></div>
 
-<!-- INTRO LOADER -->
 <div id="intro">
  <div class="intro-logo">
   <div class="logo-ring">S</div>
@@ -379,7 +410,6 @@ header{
  </div>
 </div>
 
-<!-- DRAWER -->
 <div class="scrim" id="scrim" onclick="closeMenu()"></div>
 <aside class="drawer" id="drawer">
  <div class="drawer-head">
@@ -415,19 +445,40 @@ header{
 <main class="container">
 
  <section class="hero">
-  <!-- PILLS & STATS -->
   <div class="hero-pills">
-   <div class="pill primary" onclick="switchTab('notes')">📚 Explore Classes</div>
-   <div class="pill glass" onclick="pickClass(8)">✨ Latest Notes</div>
+   <div class="pill primary" onclick="switchTab('notes')">📚 Open Notes</div>
+   <div class="pill glass" onclick="switchTab('apps')">Apps →</div>
   </div>
 
-  <div class="hero-stats-row">
-   <div class="stat-box"><b>8–10</b><span>Classes</span></div>
-   <div class="stat-box"><b>24×7</b><span>Study Access</span></div>
-   <div class="stat-box"><b>100%</b><span>Teacher Notes</span></div>
+  <div class="hub-card">
+   <div class="hub-header">
+    <div class="hub-avatar">S</div>
+    <div>
+     <h3>Sunny Hub</h3>
+     <p>Personal Resource Center</p>
+    </div>
+   </div>
+   <div class="hub-grid">
+    <div class="hub-item">
+     <b>03</b>
+     <span>Classes</span>
+    </div>
+    <div class="hub-item">
+     <b>24/7</b>
+     <span>Access</span>
+    </div>
+    <div class="hub-item">
+     <b>Fast</b>
+     <span>Navigation</span>
+    </div>
+    <div class="hub-item">
+     <b>Pro</b>
+     <span>Design</span>
+    </div>
+   </div>
+   <div class="hub-quote">"Simple enough to use. Premium enough to remember."</div>
   </div>
 
-  <!-- ANIMATED STUDY REVISE SHINE CARD -->
   <div class="shine-stage">
    <div class="orbit-ring"></div>
    <span class="badge-float badge-quick">⚡ Quick Revision</span>
@@ -438,249 +489,4 @@ header{
    <div class="shine-inner-card">
     <div class="shine-book-icon">📖</div>
     <h2>Study. Revise. Shine.</h2>
-    <p>Notes made for your classroom journey.</p>
-   </div>
-  </div>
- </section>
-
- <div class="tabs" id="tabsBar">
-  <button class="tab active" data-tab="notes" onclick="switchTab('notes')">📘 Notes</button>
-  <button class="tab" data-tab="apps" onclick="switchTab('apps')">📱 Apps</button>
-  <button class="tab" data-tab="links" onclick="switchTab('links')">🔗 Links</button>
- </div>
-
- <!-- NOTES SECTION -->
- <div class="category-section active" data-section="notes">
-  <div id="notesClassSelect">
-   <span class="class-badge-label">CHOOSE YOUR CLASS</span>
-   <div class="section-head" style="margin-top:4px">
-    <h2>Apni Class Chuno</h2>
-    <p>Pehle class select karo, phir chapters dekho</p>
-   </div>
-   <div class="class-grid">
-    <button class="class-card c8" onclick="pickClass(8)">
-     <div><div class="class-num">8</div><div class="class-name">Class 8</div><div class="class-sub">Science</div></div>
-     <span class="arrow">→</span>
-    </button>
-    <button class="class-card c9" onclick="pickClass(9)">
-     <span class="badge-soon">COMING SOON</span>
-     <div><div class="class-num">9</div><div class="class-name">Class 9</div><div class="class-sub">Jald aa rahe hain</div></div>
-     <span class="arrow">→</span>
-    </button>
-    <button class="class-card c10" onclick="pickClass(10)">
-     <span class="badge-soon">COMING SOON</span>
-     <div><div class="class-num">10</div><div class="class-name">Class 10</div><div class="class-sub">Jald aa rahe hain</div></div>
-     <span class="arrow">→</span>
-    </button>
-   </div>
-  </div>
-
-  <div id="notesChapters" class="hidden">
-   <button class="back" onclick="backToClasses()">← Change Class</button>
-   <div class="section-head"><h2>Class 8 — Notes</h2><p>Chapter PDF direct download karein ya online padhein</p></div>
-   <div class="grid">
-
-    <!-- CHAPTER 1: DAHAN AUR JWALA -->
-    <article class="card">
-     <div class="card-top"><div class="app-icon orange">🔥</div><div><h3>दहन और ज्वाला</h3><div class="sub">Science • Chapter 4</div></div></div>
-     <div class="preview porange"><div><div class="small">SCIENCE • CHAPTER 4</div><div class="big">दहन<br>और ज्वाला</div></div><div style="font-size:40px">🔥</div></div>
-     <div class="tags"><span class="tag">Chapter 4</span><span class="tag ok">Free</span></div>
-     <p class="desc">Revision friendly notes — पूरा chapter एक PDF में।</p>
-     <div class="actions">
-      <a class="action primary" href="dahan-aur-jwala.pdf" download="Dahan_Aur_Jwala_Notes.pdf">⬇ Download PDF</a>
-      <a class="btn-view" href="dahan-aur-jwala.pdf" target="_blank" rel="noopener">👁 View Notes</a>
-     </div>
-    </article>
-
-    <!-- CHAPTER 2: KOYLA AUR PETROLEUM -->
-    <article class="card">
-     <div class="card-top"><div class="app-icon blue">⛽</div><div><h3>कोयला और पेट्रोलियम</h3><div class="sub">Science • Chapter 3</div></div></div>
-     <div class="preview pblue"><div><div class="small">SCIENCE • CHAPTER 3</div><div class="big">कोयला<br>और पेट्रोलियम</div></div><div style="font-size:40px">⛽</div></div>
-     <div class="tags"><span class="tag">Chapter 3</span><span class="tag ok">Free</span></div>
-     <p class="desc">कोयला और पेट्रोलियम — पूरा chapter notes।</p>
-     <div class="actions">
-      <a class="action primary" href="koyla-aur-petroleum.pdf" download="Koyla_Aur_Petroleum_Notes.pdf">⬇ Download PDF</a>
-      <a class="btn-view" href="koyla-aur-petroleum.pdf" target="_blank" rel="noopener">👁 View Notes</a>
-     </div>
-    </article>
-
-   </div>
-  </div>
- </div>
-
- <!-- APPS SECTION -->
- <div class="category-section" data-section="apps">
-  <div class="section-head"><h2>Apps & Tools</h2><p>Direct download apps</p></div>
-  <div class="grid">
-   <article class="card">
-    <div class="card-top"><div class="app-icon orange">✂</div><div><h3>CapCut</h3><div class="sub">Video Editor</div></div></div>
-    <div class="preview porange"><div><div class="small">VIDEO EDITOR</div><div class="big">Create.<br>Edit. Share.</div></div><div style="font-size:42px">✂</div></div>
-    <div class="tags"><span class="tag">v11.2</span><span class="tag ok">Free</span></div>
-    <p class="desc">Editing tools, templates aur effects ke liye best app.</p>
-    <div class="actions">
-     <button class="action primary" onclick="toast('CapCut link jald aa raha hai')">Coming Soon</button>
-    </div>
-   </article>
-  </div>
- </div>
-
- <!-- LINKS SECTION -->
- <div class="category-section" data-section="links">
-  <div class="section-head"><h2>Important Links</h2><p>Frequently used portals</p></div>
-  <div class="grid">
-   <article class="card">
-    <div class="card-top"><div class="app-icon blue">↗</div><div><h3>LNMU 2nd Semester</h3><div class="sub">Student Portal</div></div></div>
-    <div class="tags" style="margin-top:16px"><span class="tag">Official</span><span class="tag ok">Free</span></div>
-    <p class="desc">Login, result, admit card aur admission status ke liye।</p>
-    <div class="actions"><button class="action primary" onclick="toast('Link jald add hoga')">Open</button></div>
-   </article>
-  </div>
- </div>
-
- <!-- REQUEST CENTER -->
- <section class="request-section">
-  <div class="request-card">
-   <div class="request-content">
-    <span class="request-badge">✦ REQUEST CENTER</span>
-    <h2>Need a PDF or Notes?</h2>
-    <p>Koi bhi PDF, notes ya study material chahiye? WhatsApp par message karo.</p>
-    <a class="request-btn" href="https://wa.me/917808245695?text=Hi%20Sunny%2C%20mujhe%20ek%20PDF%2FNotes%20chahiye." target="_blank" rel="noopener">
-     <span>💬</span><b>Send a Request on WhatsApp →</b>
-    </a>
-   </div>
-  </div>
- </section>
-
- <footer class="footer">© 2026 Surya Sunny • Study Hub</footer>
-</main>
-
-<div class="toast" id="toast"></div>
-
-<script>
-/* ---------- INTRO LOADER ---------- */
-window.addEventListener('load', function(){
-  setTimeout(function(){
-    var intro = document.getElementById('intro');
-    if(intro){
-      intro.classList.add('hide');
-      setTimeout(function(){
-        if(intro && intro.parentNode) intro.parentNode.removeChild(intro);
-      }, 600);
-    }
-  }, 1600);
-});
-
-/* ---------- DRAWER ---------- */
-function openMenu(){
-  document.getElementById('drawer').classList.add('show');
-  document.getElementById('scrim').classList.add('show');
-}
-function closeMenu(){
-  document.getElementById('drawer').classList.remove('show');
-  document.getElementById('scrim').classList.remove('show');
-}
-
-/* ---------- THEME ---------- */
-function toggleTheme(){
-  document.body.classList.toggle('light');
-  try{
-    localStorage.setItem('sunnyTheme', document.body.classList.contains('light') ? 'light' : 'dark');
-  }catch(e){}
-}
-(function(){
-  try{
-    if(localStorage.getItem('sunnyTheme') === 'light') document.body.classList.add('light');
-  }catch(e){}
-})();
-
-/* ---------- TAB SWITCHING ---------- */
-function switchTab(cat){
-  document.querySelectorAll('.tab').forEach(function(t){
-    t.classList.toggle('active', t.dataset.tab === cat);
-  });
-  document.querySelectorAll('.category-section').forEach(function(s){
-    s.classList.toggle('active', s.dataset.section === cat);
-  });
-  if(cat === 'notes') renderClassView(false);
-  var tabsBar = document.getElementById('tabsBar');
-  if(tabsBar){
-    var y = tabsBar.getBoundingClientRect().top + window.pageYOffset - 80;
-    window.scrollTo({top:y, behavior:'smooth'});
-  }
-}
-
-/* ---------- CLASS VIEW ---------- */
-function renderClassView(isChapterOpen){
-  var sel = document.getElementById('notesClassSelect');
-  var ch = document.getElementById('notesChapters');
-  if(isChapterOpen){
-    if(sel) sel.classList.add('hidden');
-    if(ch) ch.classList.remove('hidden');
-  } else {
-    if(sel) sel.classList.remove('hidden');
-    if(ch) ch.classList.add('hidden');
-  }
-}
-
-function showHome(){
-  renderClassView(false);
-  switchTab('notes');
-  window.scrollTo({top:0, behavior:'smooth'});
-}
-
-function pickClass(n){
-  if(n === 8){
-    renderClassView(true);
-    history.pushState({view:'class', classNum:8}, '', '#class-8');
-    var el = document.getElementById('notesChapters');
-    var y = el.getBoundingClientRect().top + window.pageYOffset - 90;
-    window.scrollTo({top:y, behavior:'smooth'});
-  } else {
-    toast('Class ' + n + ' notes jald aa rahe hain! 🔜');
-  }
-}
-
-function backToClasses(){ history.back(); }
-
-window.addEventListener('popstate', function(e){
-  var state = e.state || {};
-  if(state.view === 'class' && state.classNum === 8){
-    renderClassView(true);
-  } else {
-    renderClassView(false);
-  }
-});
-history.replaceState({view:'home'}, '', location.pathname + location.search);
-
-/* ---------- TOAST ---------- */
-function toast(msg){
-  var t = document.getElementById('toast');
-  if(!t) return;
-  t.textContent = msg;
-  t.classList.add('show');
-  clearTimeout(window.__toastTimer);
-  window.__toastTimer = setTimeout(function(){ t.classList.remove('show'); }, 2600);
-}
-
-document.addEventListener('keydown', function(e){
-  if(e.key === 'Escape') closeMenu();
-});
-
-/* ---------- SCROLL PROGRESS ---------- */
-(function(){
-  var bar = document.getElementById('scrollProgress');
-  if(!bar) return;
-  function update(){
-    var doc = document.documentElement;
-    var max = doc.scrollHeight - doc.clientHeight;
-    var pct = max > 0 ? (window.pageYOffset / max) * 100 : 0;
-    bar.style.width = pct + '%';
-  }
-  window.addEventListener('scroll', update, {passive:true});
-  window.addEventListener('resize', update);
-  update();
-})();
-</script>
-
-</body>
-</html>
+    <p>Notes made for you
