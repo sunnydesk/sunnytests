@@ -71,7 +71,8 @@ footer{border-top:1px solid var(--line);padding:30px 0;color:#74869b;font-size:1
 <section id="notes"><div class="wrap">
 <div class="sectionHead"><div><div class="eyebrow">LATEST UPLOADS</div><h2>Notes Library</h2></div><p>Abhi sample chapters diye gaye hain. Aap chapter/PDF doge to isi library mein add kiya ja sakta hai.</p></div>
 <div class="notes">
-<div class="note"><div class="noteIcon">📘</div><div><h3>Class 8 — Notes Coming Soon</h3><p>Chapter-wise study material</p></div><button class="btn download" onclick="openClass(8)">Open</button></div>
+<div class="note"><div class="noteIcon">🔥</div><div><h3>Dahan Aur Jwala</h3><p>Class 8 • Science • Chapter 4 — Combustion &amp; Flame</p></div><div class="download" style="display:flex;gap:8px"><a class="btn" href="notes/dahan-aur-jwala.pdf" target="_blank" rel="noopener">View</a><a class="btn primary" href="notes/dahan-aur-jwala.pdf" download>Download</a></div></div>
+<div class="note"><div class="noteIcon">⛽</div><div><h3>Koyla Aur Petroleum</h3><p>Class 8 • Science • Chapter 5 — Coal &amp; Petroleum</p></div><div class="download" style="display:flex;gap:8px"><a class="btn" href="notes/koyla-aur-petroleum.pdf" target="_blank" rel="noopener">View</a><a class="btn primary" href="notes/koyla-aur-petroleum.pdf" download>Download</a></div></div>
 <div class="note"><div class="noteIcon">📗</div><div><h3>Class 9 — Coming Soon</h3><p>Notes will be added soon</p></div><button class="btn download" onclick="comingSoon()">Soon</button></div>
 <div class="note"><div class="noteIcon">📕</div><div><h3>Class 10 — Coming Soon</h3><p>Notes will be added soon</p></div><button class="btn download" onclick="comingSoon()">Soon</button></div>
 <div class="note"><div class="noteIcon">⭐</div><div><h3>Important Revision Zone</h3><p>Quick revision content</p></div><button class="btn download" onclick="alert('Revision Zone will be activated when notes are added.')">Soon</button></div>
@@ -96,7 +97,13 @@ footer{border-top:1px solid var(--line);padding:30px 0;color:#74869b;font-size:1
 <div class="modal" id="modal" onclick="if(event.target===this)closeModal()"><div class="modalBox"><button class="close" onclick="closeModal()">×</button><div class="eyebrow">CLASS <span id="modalClass"></span></div><h2 id="modalTitle"></h2><p>Is class ke chapters yahan appear honge. Aap mujhe chapter/notes doge, main isi structure ke hisaab se add karne ke liye page ready kar sakta hoon.</p><div class="chapterList" id="chapterList"></div></div></div>
 <script>
 const data={8:["Science","Maths","Social Science","English"],9:["Science","Maths","Social Science","English"],10:["Science","Maths","Social Science","English"]};
-function openClass(c){document.getElementById('modal').classList.add('show');document.getElementById('modalClass').textContent=c;document.getElementById('modalTitle').textContent=`Class ${c} Notes`;document.getElementById('chapterList').innerHTML=data[c].map((x,i)=>`<div class="chapter"><span>📚 ${x}</span><small>Chapters will be added</small></div>`).join('')}
+const notesData={8:{"Science":[{title:"Ch 4: Dahan Aur Jwala (Combustion & Flame)",file:"notes/dahan-aur-jwala.pdf"},{title:"Ch 5: Koyla Aur Petroleum (Coal & Petroleum)",file:"notes/koyla-aur-petroleum.pdf"}]}};
+function openClass(c){document.getElementById('modal').classList.add('show');document.getElementById('modalClass').textContent=c;document.getElementById('modalTitle').textContent=`Class ${c} Notes`;
+document.getElementById('chapterList').innerHTML=data[c].map(subj=>{
+const chapters=(notesData[c]&&notesData[c][subj])||[];
+if(chapters.length===0)return `<div class="chapter"><span>📚 ${subj}</span><small>Chapters will be added</small></div>`;
+return chapters.map(ch=>`<div class="chapter"><span>📖 ${ch.title}</span><span style="display:flex;gap:8px"><a class="btn" style="padding:7px 12px;font-size:12px" href="${ch.file}" target="_blank" rel="noopener">View</a><a class="btn primary" style="padding:7px 12px;font-size:12px" href="${ch.file}" download>Download</a></span></div>`).join('');
+}).join('')}
 function closeModal(){document.getElementById('modal').classList.remove('show')}
 function comingSoon(){alert('✨ Class 9 & 10 ke notes bahut jald aa rahe hain! Abhi Class 8 available hai.')}
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
